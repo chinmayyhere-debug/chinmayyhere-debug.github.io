@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chinmay Parmar — AI &amp; Agent Systems Engineer</title>
+<meta name="description" content="Portfolio of Chinmay Parmar — tool-use orchestration, RAG systems, and honestly-validated AI infrastructure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090c;
+    --bg-alt: #0c0e13;
+    --bg-panel: #12151c;
+    --bg-panel-2: #171b24;
+    --border: #23262f;
+    --border-soft: #1a1d25;
+    --text: #f2f3f5;
+    --text-dim: #a3a9b7;
+    --text-faint: #6b7280;
+    --accent: #7dd3c0;
+    --accent-2: #e8b86d;
+    --accent-glow: rgba(125, 211, 192, 0.35);
+    --tier1: #7dd3c0;
+    --tier2: #e8b86d;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --max-w: 1080px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { box-sizing: border-box; min-width: 0; }
+  h1, h2, h3, p, span, a, li { overflow-wrap: break-word; word-break: break-word; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #05201a; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a.inline-link { text-decoration: underline; text-decoration-color: rgba(125,211,192,0.35); text-underline-offset: 3px; }
+  a.inline-link:hover { text-decoration-color: var(--accent); }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ===== Nav ===== */
+  #site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    background: rgba(8, 9, 12, 0);
+    border-bottom: 1px solid transparent;
+    backdrop-filter: blur(0px);
+    transition: background 0.35s var(--ease), border-color 0.35s var(--ease), backdrop-filter 0.35s var(--ease), padding 0.35s var(--ease);
+  }
+  #site-nav.scrolled {
+    background: rgba(8, 9, 12, 0.72);
+    border-bottom: 1px solid var(--border-soft);
+    backdrop-filter: blur(16px) saturate(140%);
+    padding: 12px 32px;
+  }
+  .nav-mark {
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .nav-links a {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); text-decoration: none; }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+  }
+
+  /* ===== Hero ===== */
+  header.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 0 80px;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    background:
+      radial-gradient(600px circle at 18% 22%, rgba(125,211,192,0.16), transparent 60%),
+      radial-gradient(700px circle at 82% 68%, rgba(232,184,109,0.11), transparent 60%),
+      radial-gradient(500px circle at 55% 5%, rgba(125,211,192,0.08), transparent 60%);
+    animation: drift 22s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes drift {
+    0%   { transform: translate3d(0,0,0) scale(1); }
+    100% { transform: translate3d(-2%, 2%, 0) scale(1.06); }
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11.5px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 22px;
+    padding: 6px 14px 6px 10px;
+    border: 1px solid rgba(125,211,192,0.25);
+    border-radius: 999px;
+    background: rgba(125,211,192,0.06);
+  }
+  .eyebrow .pulse-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(125,211,192,0.6);
+    animation: eyebrow-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes eyebrow-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(125,211,192,0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(125,211,192,0); }
+  }
+
+  h1 {
+    font-size: clamp(38px, 8vw, 92px);
+    line-height: 1.05;
+    margin: 0 0 22px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    max-width: 950px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  h1 .grad {
+    background: linear-gradient(100deg, var(--accent) 10%, #a8e8da 40%, var(--accent-2) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: clamp(32px, 10vw, 46px); }
+  }
+
+  .tagline {
+    font-size: clamp(17px, 2vw, 21px);
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 0 40px;
+    font-weight: 400;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .pill-link:hover {
+    border-color: var(--accent);
+    background: var(--bg-panel);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+  .pill-link.primary {
+    background: linear-gradient(135deg, var(--accent), #4fb3a0);
+    color: #05201a;
+    font-weight: 700;
+    border: none;
+  }
+  .pill-link.primary:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 40px;
+    left: 32px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-faint);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .scroll-cue svg { animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+  @media (max-width: 720px) { .scroll-cue { display: none; } }
+
+  /* ===== Stat row ===== */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border-soft);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 56px;
+    max-width: 720px;
+  }
+  .stat-tile {
+    background: var(--bg);
+    padding: 22px 20px;
+  }
+  .stat-num {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  /* ===== Sections ===== */
+  section {
+    padding: 120px 0;
+    position: relative;
+    scroll-margin-top: 90px;
+  }
+  section.alt { background: var(--bg-alt); }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .section-head .idx {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-weight: 800;
+    margin: 0;
+  }
+  .section-sub {
+    color: var(--text-dim);
+    font-size: 15.5px;
+    max-width: 640px;
+    margin: -32px 0 44px;
+  }
+
+  /* Reveal-on-scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .reveal-stagger > *:nth-child(1) { transition-delay: 0.02s; }
+  .reveal-stagger > *:nth-child(2) { transition-delay: 0.10s; }
+  .reveal-stagger > *:nth-child(3) { transition-delay: 0.18s; }
+  .reveal-stagger > *:nth-child(4) { transition-delay: 0.26s; }
+  .reveal-stagger > *:nth-child(5) { transition-delay: 0.34s; }
+  .reveal-stagger > *:nth-child(6) { transition-delay: 0.42s; }
+
+  .lede {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 720px;
+    margin: 0;
+    line-height: 1.75;
+  }
+  .lede strong { color: var(--text); font-weight: 600; }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border-soft);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .principle {
+    background: var(--bg);
+    padding: 32px 28px;
+    transition: background 0.25s var(--ease);
+  }
+  .principle:hover { background: var(--bg-panel); }
+
+  .principle .num {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .principle h3 {
+    font-size: 17px;
+    margin: 0 0 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .principle p {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* ===== Project cards ===== */
+  .project-card {
+    background: linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2) 140%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 28px;
+    position: relative;
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(125,211,192,0.35);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(125,211,192,0.08);
+  }
+
+  .project-card:last-child { margin-bottom: 0; }
+
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .project-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: rgba(125,211,192,0.1);
+    border: 1px solid rgba(125,211,192,0.25);
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .project-card h3 {
+    font-size: clamp(20px, 2.4vw, 26px);
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .project-desc {
+    color: var(--text-dim);
+    font-size: 15.5px;
+    margin: 0 0 22px;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .highlight-list {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .highlight-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .highlight-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .status-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .badge-verified {
+    background: rgba(125, 211, 192, 0.1);
+    color: var(--tier1);
+    border: 1px solid rgba(125, 211, 192, 0.3);
+  }
+
+  .badge-reviewed {
+    background: rgba(232, 184, 109, 0.1);
+    color: var(--tier2);
+    border: 1px solid rgba(232, 184, 109, 0.3);
+  }
+
+  .card-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .card-links a:hover {
+    border-color: var(--accent);
+    background: rgba(125,211,192,0.06);
+    text-decoration: none;
+    transform: translateX(2px);
+  }
+
+  /* ===== Live Demo: Fraud Risk Analyzer ===== */
+  .demo-shell {
+    background: linear-gradient(180deg, var(--bg-panel), var(--bg-panel-2) 140%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-shell::before {
+    content: "";
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .demo-note {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 720px;
+    margin: 0 0 28px;
+  }
+  .demo-note strong { color: var(--text); }
+  .demo-scenarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .demo-scenario-btn {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .demo-scenario-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: rgba(125,211,192,0.08);
+    transform: translateY(-1px);
+  }
+  .demo-scenario-btn.is-danger:hover { border-color: #e0716b; }
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; } }
+
+  .demo-field { margin-bottom: 22px; }
+  .demo-field:last-child { margin-bottom: 0; }
+  .demo-field label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .demo-field label .demo-val { color: var(--accent); font-weight: 800; }
+  .demo-field input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 4px;
+    cursor: pointer;
+  }
+  .demo-toggle-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .demo-toggle {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .demo-toggle.is-active {
+    border-color: var(--accent);
+    color: var(--bg);
+    background: var(--accent);
+  }
+
+  .demo-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 28px 20px;
+    background: rgba(0,0,0,0.18);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+  }
+  .demo-gauge-wrap { width: 220px; margin-bottom: 6px; }
+  .demo-score {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-top: -46px;
+    transition: color 0.4s var(--ease);
+  }
+  .demo-score-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    transition: color 0.4s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .demo-why {
+    width: 100%;
+    text-align: left;
+  }
+  .demo-why-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+  .demo-factor { margin-bottom: 12px; }
+  .demo-factor:last-child { margin-bottom: 0; }
+  .demo-factor-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+  }
+  .demo-factor-row span:last-child { color: var(--text); font-weight: 700; }
+  .demo-factor-bar {
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .demo-factor-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent);
+    transition: width 0.5s var(--ease);
+  }
+  .demo-why-empty {
+    font-size: 13px;
+    color: var(--text-faint);
+    font-style: italic;
+  }
+  .demo-disclaimer {
+    margin-top: 26px;
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.6;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 18px;
+  }
+
+  /* ===== Timeline (experience) ===== */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: linear-gradient(var(--border), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .timeline-item h3 {
+    font-size: 18px;
+    margin: 0 0 4px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .timeline-item .role-org { color: var(--text-dim); font-weight: 500; }
+  .timeline-item .dates {
+    display: inline-block;
+    font-size: 12.5px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin: 6px 0 12px;
+  }
+  .timeline-item p {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    margin: 0;
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  /* ===== Skills ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+  }
+
+  .skill-group h4 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 16px;
+    font-weight: 700;
+  }
+
+  .skill-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .skill-group li {
+    font-size: 14.5px;
+    padding: 10px 0;
+    color: var(--text);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .skill-group li:last-child { border-bottom: none; }
+
+  /* ===== Footer / CTA ===== */
+  .cta-band {
+    background: linear-gradient(135deg, rgba(125,211,192,0.08), rgba(232,184,109,0.05));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 64px 48px;
+    text-align: center;
+  }
+  .cta-band h2 { margin-bottom: 14px; }
+  .cta-band p { color: var(--text-dim); font-size: 16px; max-width: 480px; margin: 0 auto 32px; }
+  .cta-band .contact-row { justify-content: center; }
+
+  footer {
+    padding: 56px 0 64px;
+    color: var(--text-faint);
+    font-size: 13.5px;
+    text-align: center;
+  }
+
+  footer a { color: var(--text-dim); }
+  footer .foot-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
+
+  @media (max-width: 600px) {
+    header.hero { padding: 120px 0 60px; min-height: auto; }
+    section { padding: 72px 0; }
+    .project-card { padding: 26px; }
+    .cta-band { padding: 44px 24px; }
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ===== AI Chat Widget ===== */
+  @keyframes cw-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(125, 211, 192, 0.45), 0 8px 24px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(125, 211, 192, 0), 0 8px 24px rgba(0,0,0,0.4); }
+  }
+  @keyframes cw-fade-in {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes cw-msg-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cw-spin-gradient {
+    to { --cw-angle: 360deg; }
+  }
+  @property --cw-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes cw-blink {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-3px); }
+  }
+  @keyframes cw-bubble-pop {
+    0% { opacity: 0; transform: translateY(8px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  #cw-launcher {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    background: linear-gradient(135deg, var(--accent), #4fb3a0 60%, var(--accent-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: cw-pulse 2.6s ease-in-out infinite;
+    transition: transform 0.2s ease;
+  }
+  #cw-launcher:hover { transform: scale(1.07); }
+  #cw-launcher svg { width: 26px; height: 26px; }
+  #cw-launcher .cw-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ff5d5d;
+    border: 2px solid var(--bg);
+  }
+
+  #cw-teaser {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    max-width: 220px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 14px 14px 4px 14px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text);
+    z-index: 9998;
+    animation: cw-bubble-pop 0.4s ease both;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  #cw-teaser button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-panel-2);
+    color: var(--text-dim);
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #cw-panel {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    height: 520px;
+    max-height: calc(100vh - 140px);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: cw-fade-in 0.25s ease both;
+  }
+  #cw-panel.cw-open { display: flex; }
+
+  #cw-head {
+    padding: 16px 18px;
+    background: linear-gradient(120deg, rgba(125,211,192,0.14), rgba(232,184,109,0.08));
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #cw-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: conic-gradient(from var(--cw-angle, 0deg), var(--accent), var(--accent-2), var(--accent));
+    animation: cw-spin-gradient 4s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  #cw-avatar::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--bg-panel);
+  }
+  #cw-avatar svg {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    z-index: 1;
+    color: var(--accent);
+  }
+
+  #cw-head-text h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  #cw-head-text p {
+    margin: 2px 0 0;
+    font-size: 11.5px;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #cw-head-text .cw-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  #cw-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+  #cw-close:hover { color: var(--text); }
+
+  #cw-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #cw-body::-webkit-scrollbar { width: 6px; }
+  #cw-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .cw-msg {
+    max-width: 86%;
+    padding: 10px 13px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    animation: cw-msg-in 0.25s ease both;
+    white-space: pre-wrap;
+  }
+  .cw-msg-bot {
+    align-self: flex-start;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 3px;
+    color: var(--text);
+  }
+  .cw-msg-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, var(--accent), #4fb3a0);
+    color: #05201a;
+    font-weight: 600;
+    border-bottom-right-radius: 3px;
+  }
+  .cw-msg-bot a { color: var(--accent); font-weight: 600; }
+
+  .cw-typing {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    padding: 12px 14px;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    border-bottom-left-radius: 3px;
+  }
+  .cw-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-faint);
+    animation: cw-blink 1.3s infinite;
+  }
+  .cw-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .cw-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+  #cw-chips {
+    padding: 10px 14px 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    border-top: 1px solid var(--border);
+  }
+  .cw-chip {
+    font-size: 12px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, transform 0.1s;
+  }
+  .cw-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  #cw-inputrow {
+    display: flex;
+    gap: 8px;
+    padding: 12px 14px 14px;
+  }
+  #cw-input {
+    flex: 1;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+  }
+  #cw-input:focus { border-color: var(--accent); }
+  #cw-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), #4fb3a0);
+    color: #05201a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  #cw-send:hover { filter: brightness(1.08); }
+  #cw-send:disabled { opacity: 0.5; cursor: default; }
+
+  @media (max-width: 460px) {
+    #cw-panel { right: 12px; bottom: 84px; width: calc(100vw - 24px); }
+    #cw-launcher { right: 16px; bottom: 16px; }
+    #cw-teaser { right: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="site-nav">
+  <a class="nav-mark" href="#top"><span class="dot"></span>Chinmay Parmar</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#demo">Live Demo</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow reveal in-view"><span class="pulse-dot"></span>Toronto, ON — Open to AI/ML &amp; Data roles</div>
+    <h1 class="reveal in-view">Building <span class="grad">evidence&#8209;driven</span><br>AI systems.</h1>
+    <p class="tagline reveal in-view">
+      Computer Engineering graduate with a Graduate Certificate in AI &amp;
+      Data Science, moving from fraud investigation and IT audit in
+      regulated financial services into AI/ML engineering — bringing the
+      same rigor I used to trace fraud cases and audit findings back to
+      their root cause into building and validating AI systems.
+    </p>
+    <div class="contact-row reveal in-view">
+      <a class="pill-link primary" href="#projects">View Projects ↓</a>
+      <a class="pill-link" href="mailto:chinmayy.parmar@gmail.com">✉ Email</a>
+      <a class="pill-link" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
+      <a class="pill-link" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
+    </div>
+
+    <div class="stat-row reveal in-view">
+      <div class="stat-tile">
+        <div class="stat-num">10,000+</div>
+        <div class="stat-label">Fraud cases investigated</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">5+ TB</div>
+        <div class="stat-label">Transactional data analyzed</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Shipped AI/agent projects</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">5</div>
+        <div class="stat-label">AI/Cloud certifications</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">01</span>
+      <h2>About</h2>
+    </div>
+    <p class="lede reveal">
+      My path into AI engineering isn't the typical one. I spent the last
+      two years inside a bank — investigating <strong>10,000+ fraud cases</strong>
+      across <strong>5+&nbsp;TB</strong> of transactional data as a Dispute Analyst, auditing
+      technical controls (SOC&nbsp;1, SOC&nbsp;2, ISO&nbsp;3000) as an IT
+      audit intern, and now translating operational requirements into
+      structured, defensible decisions as an Insolvency Officer, all under
+      real regulatory and policy constraints. Alongside that, I completed a
+      Graduate Certificate in AI &amp; Data Science and a run of Oracle and
+      Google Cloud certifications, and started building AI systems on my
+      own — deliberately in domains close to what I already know
+      (regulatory/compliance documents, operational tooling), and
+      deliberately validated the same way I'd validate an audit finding:
+      with evidence, a labeled test set, and an honest account of what's
+      actually been checked versus what hasn't.
+    </p>
+  </div>
+</section>
+
+<section id="principles" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">02</span>
+      <h2>How I Build</h2>
+    </div>
+    <p class="section-sub reveal">
+      These aren't abstract engineering values — they're habits carried
+      over directly from fraud investigation and audit work, where every
+      claim needs a trail back to evidence.
+    </p>
+    <div class="principles-grid reveal-stagger reveal">
+      <div class="principle">
+        <div class="num">01</div>
+        <h3>Verified, not assumed</h3>
+        <p>Every feature is backed by a labeled test suite, run and re-run after every change — not just written and hoped to work.</p>
+      </div>
+      <div class="principle">
+        <div class="num">02</div>
+        <h3>Honest about limits</h3>
+        <p>Code paths that couldn't be live-tested (missing API keys, blocked networks) are labeled "reviewed, not verified" — never dressed up as proven.</p>
+      </div>
+      <div class="principle">
+        <div class="num">03</div>
+        <h3>Abstain over guess</h3>
+        <p>Systems are designed to decline low-confidence answers rather than produce a plausible-sounding wrong one.</p>
+      </div>
+      <div class="principle">
+        <div class="num">04</div>
+        <h3>Document real bugs</h3>
+        <p>Every project ships a validation report — including the actual bugs found during development, root cause, and fix.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">03</span>
+      <h2>Featured Projects</h2>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-index">01</div>
+      <div class="project-head">
+        <h3>MCP Logistics Tool Orchestrator</h3>
+      </div>
+      <p class="project-desc">
+        A multi-tool agent orchestration system for logistics operations —
+        shipment tracking, freight cost lookup, DOT compliance checks, and
+        damage incident logging — built around MCP-style tool schemas, with
+        both a rule-based router and an LLM tool-use (Claude API) routing
+        mode, deployable as an HTTP service.
+      </p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">MCP-style Tool Design</span>
+        <span class="tag">Anthropic Tool Use API</span>
+        <span class="tag">Agent Orchestration</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Kubernetes</span>
+      </div>
+      <ul class="highlight-list">
+        <li>Multi-step tool chaining: a delayed-shipment lookup automatically triggers a downstream compliance check — real orchestration logic, not a single tool call.</li>
+        <li>Rewrote the LLM tool-use path into a proper agent loop (call → execute tool → return result → repeat) after finding the original implementation never completed its round-trip to the model.</li>
+        <li>Shipped with a stdlib HTTP server, a Dockerfile, docker-compose, and Kubernetes manifests — deployment-ready, not just a script.</li>
+      </ul>
+      <div class="status-badges">
+        <span class="badge badge-verified">✓ Rule-based routing: 6/6 tests passing</span>
+        <span class="badge badge-verified">✓ HTTP server: verified live</span>
+        <span class="badge badge-reviewed">◐ LLM routing: reviewed, pending live API test</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/chinmayyhere-debug/mcp-logistics-tools" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-index">02</div>
+      <div class="project-head">
+        <h3>Regulatory Document Q&amp;A</h3>
+      </div>
+      <p class="project-desc">
+        A retrieval-based question-answering system over compliance
+        documents (Customer Due Diligence, Transaction Monitoring, Sanctions
+        Screening) using TF-IDF and cosine similarity — every answer is a
+        cited, exact source passage, with no generative model and no
+        hallucination risk. The document domain isn't arbitrary — it mirrors
+        the regulated financial services environment I work in day-to-day.
+      </p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Information Retrieval</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">RAG Foundations</span>
+        <span class="tag">Compliance Domain</span>
+      </div>
+      <ul class="highlight-list">
+        <li>Abstain-when-uncertain design: declines to answer rather than guessing, validated with negative-control test cases built specifically to check this.</li>
+        <li>Found and fixed a section-numbering bug where document preambles were mis-indexed as "section 1," which risked surfacing generic boilerplate as false-positive matches.</li>
+        <li>Explicitly built as the retrieval foundation for a future embeddings + LLM-generation upgrade — not the finished picture.</li>
+      </ul>
+      <div class="status-badges">
+        <span class="badge badge-verified">✓ 10/10 tests passing, including negative controls</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/chinmayyhere-debug/regulatory-document-qa" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="demo" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">04</span>
+      <h2>Try It Live</h2>
+    </div>
+
+    <div class="demo-shell reveal">
+      <p class="demo-note">
+        <strong>Fraud Risk Analyzer</strong> — a small, transparent scoring engine you can play with
+        right here. Adjust a transaction's attributes and watch the risk score update in real time,
+        with every point of the score explained — the same "show your work, don't guess" principle
+        behind my <a class="inline-link" href="#projects">Regulatory Q&amp;A project</a>, applied to the
+        kind of decisions I made daily as a Fraud/Dispute Analyst at CIBC.
+      </p>
+
+      <div class="demo-scenarios">
+        <button class="demo-scenario-btn" data-scenario="cardTesting">⚡ Card-testing pattern</button>
+        <button class="demo-scenario-btn" data-scenario="falsePositive">🙂 Legit, but flagged</button>
+        <button class="demo-scenario-btn" data-scenario="takeover">🕵️ Account-takeover pattern</button>
+        <button class="demo-scenario-btn is-danger" data-scenario="cryptoCashout">🔺 Crypto cash-out</button>
+        <button class="demo-scenario-btn" id="demo-randomize">🎲 Randomize</button>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-controls">
+          <div class="demo-field">
+            <label>Transaction amount <span class="demo-val" id="val-amount">$150</span></label>
+            <input type="range" id="ctl-amount" min="10" max="5000" step="10" value="150">
+          </div>
+          <div class="demo-field">
+            <label>Location vs. home address</label>
+            <div class="demo-toggle-row" data-group="location">
+              <div class="demo-toggle is-active" data-value="0">Same city</div>
+              <div class="demo-toggle" data-value="8">Same country</div>
+              <div class="demo-toggle" data-value="25">Different country</div>
+            </div>
+          </div>
+          <div class="demo-field">
+            <label>Device</label>
+            <div class="demo-toggle-row" data-group="device">
+              <div class="demo-toggle is-active" data-value="0">Known device</div>
+              <div class="demo-toggle" data-value="20">New / unrecognized</div>
+            </div>
+          </div>
+          <div class="demo-field">
+            <label>Velocity</label>
+            <div class="demo-toggle-row" data-group="velocity">
+              <div class="demo-toggle is-active" data-value="0">Normal (first today)</div>
+              <div class="demo-toggle" data-value="25">High (5+ in last hour)</div>
+            </div>
+          </div>
+          <div class="demo-field">
+            <label>Time of transaction</label>
+            <div class="demo-toggle-row" data-group="time">
+              <div class="demo-toggle is-active" data-value="0">Business hours</div>
+              <div class="demo-toggle" data-value="10">Late night (2–5am)</div>
+            </div>
+          </div>
+          <div class="demo-field">
+            <label>Merchant category</label>
+            <div class="demo-toggle-row" data-group="merchant">
+              <div class="demo-toggle is-active" data-value="0">Everyday retail</div>
+              <div class="demo-toggle" data-value="8">Electronics</div>
+              <div class="demo-toggle" data-value="20">Gift cards / crypto</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-result">
+          <div class="demo-gauge-wrap">
+            <svg viewBox="0 0 220 130" width="220" height="130">
+              <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+              <path id="demo-gauge-arc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#7dd3c0" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.5s var(--ease), stroke 0.4s var(--ease);"/>
+            </svg>
+          </div>
+          <div class="demo-score" id="demo-score">0</div>
+          <div class="demo-score-label" id="demo-score-label">LOW RISK</div>
+
+          <div class="demo-why">
+            <div class="demo-why-title">Why this score</div>
+            <div id="demo-why-list"></div>
+          </div>
+
+          <div class="demo-disclaimer">
+            Illustrative model built for this portfolio — a simplified, transparent rule-weighted
+            scorer, not connected to any bank system or real customer data. It mirrors the kind of
+            factor-based reasoning used in real AML/fraud triage, scaled down to something you can
+            interact with in a browser.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">05</span>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="timeline reveal-stagger reveal">
+      <div class="timeline-item">
+        <h3>Insolvency Officer</h3>
+        <div class="role-org">CIBC, Toronto, ON</div>
+        <div class="dates">JUL 2025 – PRESENT</div>
+        <p>
+          Translate complex operational requirements into structured, documented
+          decisions under regulatory and policy constraints. Collaborate
+          cross-functionally with Legal, Compliance, and branch teams to
+          resolve technical and procedural discrepancies.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>Fraud Analyst (Dispute Analyst)</h3>
+        <div class="role-org">CIBC, Toronto, ON</div>
+        <div class="dates">OCT 2024 – JUN 2025</div>
+        <p>
+          Investigated 10,000+ cases, analyzing 5+&nbsp;TB of transactional data
+          to identify patterns and translate findings into clear, actionable
+          outcomes under time pressure.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>IT Audit Intern (Co-op)</h3>
+        <div class="role-org">SAV Associates, Toronto, ON</div>
+        <div class="dates">FEB 2024 – SEP 2024</div>
+        <p>
+          Conducted technical risk assessments and control reviews (SOC&nbsp;1,
+          SOC&nbsp;2, ISO&nbsp;3000) across multiple firms, tracing every
+          finding back to supporting evidence. Built structured technical
+          reports translating findings into clear, actionable recommendations
+          for stakeholders.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">06</span>
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid reveal-stagger reveal">
+      <div class="skill-group">
+        <h4>AI / LLM</h4>
+        <ul>
+          <li>Anthropic Claude tool-use / function calling</li>
+          <li>Agent orchestration &amp; multi-step tool chaining</li>
+          <li>MCP-style tool schema design</li>
+          <li>Retrieval (TF-IDF / cosine similarity, RAG concepts)</li>
+          <li>Model / system validation &amp; testing</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Engineering</h4>
+        <ul>
+          <li>Python &amp; SQL</li>
+          <li>Data pipeline design</li>
+          <li>Test-driven validation &amp; labeled test suites</li>
+          <li>REST/HTTP service design</li>
+          <li>Structured technical documentation</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Infrastructure</h4>
+        <ul>
+          <li>Docker &amp; docker-compose</li>
+          <li>Kubernetes (deployments, services)</li>
+          <li>Git / GitHub</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Analytical Practice</h4>
+        <ul>
+          <li>Root cause analysis &amp; debugging</li>
+          <li>Requirements translation</li>
+          <li>Cross-functional collaboration</li>
+          <li>Regulatory / compliance context</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="credentials" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">07</span>
+      <h2>Certifications &amp; Education</h2>
+    </div>
+    <div class="skills-grid reveal-stagger reveal">
+      <div class="skill-group">
+        <h4>Certifications</h4>
+        <ul>
+          <li><a class="inline-link" href="https://coursera.org/share/eb5eae29109ffc56c91c5a63443f943a" target="_blank" rel="noopener">Fundamentals of Building AI Agents — IBM</a></li>
+          <li><a class="inline-link" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=A84F886022AEF60CE97537E8512ED09E5FCCC934D920688434671597C1043241" target="_blank" rel="noopener">OCI 2025 Certified Generative AI Professional — Oracle</a></li>
+          <li><a class="inline-link" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=B0A8BCA12ED0216A5BC0D1DC536C17BB16BBDB4F5042D15846E7DD30FBFF5EA1" target="_blank" rel="noopener">OCI 2025 Certified Data Science Professional — Oracle</a></li>
+          <li><a class="inline-link" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C83ED1785215B0623587E0444589084D8523FD7D251ECF18BA44A19D58F71374" target="_blank" rel="noopener">Oracle Database@AWS Certified Architect Professional</a></li>
+          <li><a class="inline-link" href="https://www.skills.google/public_profiles/d9a2387e-ea0e-4309-96e0-f2c8b84246f9" target="_blank" rel="noopener">Google Cloud Skills Boost — Diamond League, 28,733 pts</a></li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Education</h4>
+        <ul>
+          <li>Graduate Certificate, AI &amp; Data Science — Loyalist College, Toronto (2023–2024)</li>
+          <li>B.Eng, Computer Engineering — Gujarat Technological University (2018–2022)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Let's talk.</h2>
+      <p>Open to AI/ML engineering, data science, and fraud/AML analytics roles in Toronto and remote across Canada.</p>
+      <div class="contact-row">
+        <a class="pill-link primary" href="mailto:chinmayy.parmar@gmail.com">✉ chinmayy.parmar@gmail.com</a>
+        <a class="pill-link" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
+        <a class="pill-link" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="mailto:chinmayy.parmar@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p>© 2026 Chinmay Parmar. Built with an honest account of what's verified and what isn't.</p>
+  </div>
+</footer>
+
+<!-- ===== AI Chat Widget ===== -->
+<div id="cw-teaser" style="display:none;">
+  <button id="cw-teaser-close" aria-label="Dismiss">✕</button>
+  👋 Curious about Chinmay? Ask me anything.
+</div>
+
+<button id="cw-launcher" aria-label="Open chat assistant">
+  <span class="cw-dot"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="#05201a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2a1 1 0 0 1 1 1v1.06A8.004 8.004 0 0 1 20 12v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a8.004 8.004 0 0 1 7-7.94V3a1 1 0 0 1 1-1z"></path>
+    <circle cx="9" cy="12" r="1" fill="#05201a"></circle>
+    <circle cx="15" cy="12" r="1" fill="#05201a"></circle>
+    <path d="M4 15v2a2 2 0 0 0 2 2h1l-1 3 4-3h6a2 2 0 0 0 2-2v-2"></path>
+  </svg>
+</button>
+
+<div id="cw-panel" role="dialog" aria-label="Chat about Chinmay">
+  <div id="cw-head">
+    <div id="cw-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        <circle cx="12" cy="12" r="4"></circle>
+      </svg>
+    </div>
+    <div id="cw-head-text">
+      <h4>Ask about Chinmay</h4>
+      <p><span class="cw-status-dot"></span>Built from his resume &amp; project data</p>
+    </div>
+    <button id="cw-close" aria-label="Close chat">✕</button>
+  </div>
+
+  <div id="cw-body"></div>
+
+  <div id="cw-chips"></div>
+
+  <div id="cw-inputrow">
+    <input id="cw-input" type="text" placeholder="Type a question…" autocomplete="off" />
+    <button id="cw-send" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#05201a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2" fill="#05201a"></polygon>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Scroll-triggered reveal animations ----
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function (el) {
+      if (!el.classList.contains('in-view')) io.observe(el);
+    });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in-view'); });
+  }
+
+  // ---- Nav background on scroll ----
+  var nav = document.getElementById('site-nav');
+  function onScroll() {
+    if (window.scrollY > 40) { nav.classList.add('scrolled'); }
+    else { nav.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Fraud Risk Analyzer: transparent, client-side, illustrative demo ----
+  var demoRoot = document.getElementById('demo');
+  if (!demoRoot) return;
+
+  var amountEl = document.getElementById('ctl-amount');
+  var amountValEl = document.getElementById('val-amount');
+  var scoreEl = document.getElementById('demo-score');
+  var scoreLabelEl = document.getElementById('demo-score-label');
+  var whyListEl = document.getElementById('demo-why-list');
+  var arcEl = document.getElementById('demo-gauge-arc');
+  var ARC_LEN = 283; // measured circumference of the gauge path
+
+  var groups = ['location', 'device', 'velocity', 'time', 'merchant'];
+
+  var LABELS = {
+    location: { 0: 'Same city as home address', 8: 'Same country, different city', 25: 'Different country than home address' },
+    device: { 0: 'Known device', 20: 'New / unrecognized device' },
+    velocity: { 0: 'Normal transaction velocity', 25: 'High velocity — 5+ transactions in the last hour' },
+    time: { 0: 'During business hours', 10: 'Late night (2–5am)' },
+    merchant: { 0: 'Everyday retail / grocery', 8: 'Electronics / high-value goods', 20: 'Gift cards / crypto on-ramp' }
+  };
+
+  function getActive(group) {
+    var row = demoRoot.querySelector('.demo-toggle-row[data-group="' + group + '"]');
+    var active = row.querySelector('.demo-toggle.is-active');
+    return parseInt(active.getAttribute('data-value'), 10);
+  }
+
+  function setActive(group, value) {
+    var row = demoRoot.querySelector('.demo-toggle-row[data-group="' + group + '"]');
+    var toggles = row.querySelectorAll('.demo-toggle');
+    toggles.forEach(function (t) {
+      t.classList.toggle('is-active', parseInt(t.getAttribute('data-value'), 10) === value);
+    });
+  }
+
+  function riskBand(score) {
+    if (score < 25) return { label: 'LOW RISK', color: '#7dd3c0' };
+    if (score < 50) return { label: 'MEDIUM RISK', color: '#e8b86d' };
+    if (score < 75) return { label: 'HIGH RISK', color: '#e29a52' };
+    return { label: 'CRITICAL RISK', color: '#e0716b' };
+  }
+
+  function recalc() {
+    var amount = parseInt(amountEl.value, 10);
+    amountValEl.textContent = '$' + amount.toLocaleString();
+
+    var amountPts = Math.round(Math.min(30, (amount / 5000) * 30));
+    var factors = [{ label: 'Transaction amount ($' + amount.toLocaleString() + ')', pts: amountPts }];
+
+    groups.forEach(function (g) {
+      var val = getActive(g);
+      if (val > 0) factors.push({ label: LABELS[g][val], pts: val });
+    });
+
+    var total = amountPts;
+    groups.forEach(function (g) { total += getActive(g); });
+    total = Math.min(100, total);
+
+    // score + label
+    scoreEl.textContent = total;
+    var band = riskBand(total);
+    scoreLabelEl.textContent = band.label;
+    scoreEl.style.color = band.color;
+    scoreLabelEl.style.color = band.color;
+    scoreLabelEl.style.background = band.color + '1a';
+    scoreLabelEl.style.border = '1px solid ' + band.color + '4d';
+
+    // gauge arc
+    var offset = ARC_LEN - (ARC_LEN * total / 100);
+    arcEl.style.strokeDashoffset = offset;
+    arcEl.style.stroke = band.color;
+
+    // why panel
+    factors.sort(function (a, b) { return b.pts - a.pts; });
+    var withPts = factors.filter(function (f) { return f.pts > 0; });
+    if (withPts.length === 0) {
+      whyListEl.innerHTML = '<div class="demo-why-empty">No elevated-risk factors detected — a clean, low-friction transaction.</div>';
+    } else {
+      whyListEl.innerHTML = withPts.map(function (f) {
+        var pct = Math.round((f.pts / 30) * 100);
+        return '<div class="demo-factor">' +
+          '<div class="demo-factor-row"><span>' + f.label + '</span><span>+' + f.pts + '</span></div>' +
+          '<div class="demo-factor-bar"><div class="demo-factor-fill" style="width:' + Math.min(100, pct) + '%"></div></div>' +
+          '</div>';
+      }).join('');
+    }
+  }
+
+  // toggle-row clicks
+  demoRoot.querySelectorAll('.demo-toggle').forEach(function (t) {
+    t.addEventListener('click', function () {
+      var row = t.closest('.demo-toggle-row');
+      row.querySelectorAll('.demo-toggle').forEach(function (x) { x.classList.remove('is-active'); });
+      t.classList.add('is-active');
+      recalc();
+    });
+  });
+
+  amountEl.addEventListener('input', recalc);
+
+  // preset scenarios
+  var SCENARIOS = {
+    cardTesting: { amount: 15, location: 25, device: 20, velocity: 25, time: 10, merchant: 0 },
+    falsePositive: { amount: 890, location: 25, device: 0, velocity: 0, time: 0, merchant: 8 },
+    takeover: { amount: 2400, location: 25, device: 20, velocity: 0, time: 10, merchant: 20 },
+    cryptoCashout: { amount: 4200, location: 8, device: 20, velocity: 25, time: 10, merchant: 20 }
+  };
+
+  function applyScenario(s) {
+    amountEl.value = s.amount;
+    setActive('location', s.location);
+    setActive('device', s.device);
+    setActive('velocity', s.velocity);
+    setActive('time', s.time);
+    setActive('merchant', s.merchant);
+    recalc();
+  }
+
+  demoRoot.querySelectorAll('.demo-scenario-btn[data-scenario]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyScenario(SCENARIOS[btn.getAttribute('data-scenario')]);
+    });
+  });
+
+  document.getElementById('demo-randomize').addEventListener('click', function () {
+    amountEl.value = Math.round((10 + Math.random() * 4990) / 10) * 10;
+    groups.forEach(function (g) {
+      var options = Object.keys(LABELS[g]).map(Number);
+      var pick = options[Math.floor(Math.random() * options.length)];
+      setActive(g, pick);
+    });
+    recalc();
+  });
+
+  recalc();
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Knowledge base, drawn directly from this page's own content ----
+  var KB = [
+    {
+      id: "working-on",
+      q: "What is Chinmay currently working on?",
+      keywords: ["working on", "current project", "right now", "these days", "currently doing"],
+      a: "Right now he's actively building two AI/agent projects: a **MCP Logistics Tool Orchestrator** (multi-tool agent orchestration for shipment tracking, freight cost, DOT compliance, and damage logging — with both a rule-based router and an LLM tool-use routing mode using Claude's API) and a **Regulatory Document Q&A system** (retrieval-based Q&A over compliance documents, built as the foundation for a future embeddings + LLM-generation upgrade). Both ship with real test suites and validation reports. Check the Featured Projects section above, or the GitHub links, for details."
+    },
+    {
+      id: "job",
+      q: "Where does he currently work?",
+      keywords: ["work now", "job now", "currently work", "current job", "current role", "employer"],
+      a: "He's currently an **Insolvency Officer at CIBC** in Toronto, ON (July 2025–Present), translating operational requirements into structured, documented decisions under regulatory and policy constraints, and working cross-functionally with Legal and Compliance. Before that he was a **Fraud Analyst (Dispute Analyst) at CIBC** (Oct 2024–Jun 2025), where he investigated 10,000+ fraud cases across 5+ TB of transactional data. He's actively looking to transition into an AI/ML engineering role — that's what this whole site and the projects on it are aimed at."
+    },
+    {
+      id: "education",
+      q: "Where did he study?",
+      keywords: ["study", "studied", "school", "college", "university", "degree", "education"],
+      a: "Two degrees: an **Ontario College Graduate Certificate in Artificial Intelligence & Data Science from Loyalist College**, Toronto (Jan 2023–Sept 2024), and a **Bachelor of Engineering in Computer Engineering from Gujarat Technological University**, Ahmedabad, India (Aug 2018–June 2022). On top of that he's picked up certifications from IBM, Oracle (x3), and Google Cloud Skills Boost — see the Certifications section below."
+    },
+    {
+      id: "projects",
+      q: "What projects has he built?",
+      keywords: ["projects", "built", "portfolio project", "github project"],
+      a: "Two shipped so far, both on GitHub: **MCP Logistics Tool Orchestrator** (agent tool-orchestration for logistics ops, Docker + Kubernetes deployment layer) and **Regulatory Document Q&A** (TF-IDF retrieval over compliance docs, 10/10 tests passing including negative controls). Both are honestly labeled — what's actually tested and verified vs. what's written-but-unverified is called out explicitly in each README. Scroll up to Featured Projects for the full writeups and GitHub links. There's also a **Try It Live** section right on this page — a Fraud Risk Analyzer you can play with directly, no GitHub click required."
+    },
+    {
+      id: "demo",
+      q: "Is there anything interactive on this page?",
+      keywords: ["demo", "interactive", "live demo", "try it", "play with", "fraud risk analyzer", "game"],
+      a: "Yes — scroll to **Try It Live**, right after Featured Projects. It's a Fraud Risk Analyzer built directly into this page: adjust a transaction's amount, location, device, velocity, time, and merchant category with sliders and toggles, and watch a transparent, explainable risk score update in real time — every point is broken down in a 'why this score' panel. It's a simplified, illustrative model (not connected to any real bank system), but the design principle is the same one behind the Regulatory Q&A project: show your work, don't just output a black-box number."
+    },
+    {
+      id: "skills",
+      q: "What are his key skills?",
+      keywords: ["skills", "tech stack", "technologies", "good at", "stack"],
+      a: "AI/LLM: Anthropic Claude tool-use, agent orchestration, MCP-style tool schema design, retrieval (TF-IDF/RAG concepts), model validation. Engineering: Python, SQL, data pipeline design, test-driven validation, REST/HTTP services. Infrastructure: Docker, docker-compose, Kubernetes, Git. And from his fraud/audit background: root-cause analysis, requirements translation, and regulatory/compliance context — which is genuinely why his projects ship with validation reports and cited evidence. Full breakdown in the Skills section above."
+    },
+    {
+      id: "experience",
+      q: "What's his work experience?",
+      keywords: ["experience", "resume", "background", "career history", "worked before"],
+      a: "Insolvency Officer at CIBC (Jul 2025–Present) → Fraud Analyst / Dispute Analyst at CIBC (Oct 2024–Jun 2025, 10,000+ cases investigated) → IT Audit Intern at SAV Associates (Feb–Sep 2024, SOC 1/SOC 2/ISO 3000 control reviews). It's a career-changer story: regulated financial services experience plus a formal AI & Data Science credential, not a fresh CS grad with no work history. See the Experience section above for full detail."
+    },
+    {
+      id: "certifications",
+      q: "What certifications does he have?",
+      keywords: ["certification", "certificate", "certified", "badge"],
+      a: "Five, all independently verifiable via the badge links in the Certifications section: Fundamentals of Building AI Agents (IBM), OCI 2025 Certified Generative AI Professional (Oracle), OCI 2025 Certified Data Science Professional (Oracle), Oracle Database@AWS Certified Architect Professional, and Google Cloud Skills Boost — Diamond League (28,733 pts)."
+    },
+    {
+      id: "contact",
+      q: "How can I contact him?",
+      keywords: ["contact", "email", "reach him", "hire him", "linkedin", "get in touch"],
+      a: "Easiest ways: email at chinmayy.parmar@gmail.com, or connect on LinkedIn (linkedin.com/in/chinmayyhere). His GitHub is github.com/chinmayyhere-debug if you want to look at the code behind these projects directly. All three links are in the header and footer of this page."
+    },
+    {
+      id: "location",
+      q: "Where is he based?",
+      keywords: ["located", "based", "location", "city", "toronto", "where is he"],
+      a: "Toronto, Ontario, Canada."
+    }
+  ];
+
+  var GREETING = "Hi! I'm a small assistant built from the content on this page — not a live model, just a quick way to find things without scrolling. Ask me about Chinmay's projects, experience, education, or skills, or tap a question below.";
+  var FALLBACK = "I don't have a canned answer for that — I'm a lightweight, page-content-based assistant, not a full AI backend. Try one of the suggested questions, or reach out directly at chinmayy.parmar@gmail.com / LinkedIn for anything specific.";
+
+  var CHIP_ORDER = ["working-on", "job", "education", "projects", "skills", "contact"];
+
+  var panel = document.getElementById("cw-panel");
+  var launcher = document.getElementById("cw-launcher");
+  var closeBtn = document.getElementById("cw-close");
+  var body = document.getElementById("cw-body");
+  var chipsEl = document.getElementById("cw-chips");
+  var input = document.getElementById("cw-input");
+  var sendBtn = document.getElementById("cw-send");
+  var teaser = document.getElementById("cw-teaser");
+  var teaserClose = document.getElementById("cw-teaser-close");
+
+  var opened = false;
+
+  function escapeHtml(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function mdBold(s) {
+    return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  }
+
+  function addMsg(text, who) {
+    var div = document.createElement("div");
+    div.className = "cw-msg " + (who === "user" ? "cw-msg-user" : "cw-msg-bot");
+    div.innerHTML = mdBold(text);
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function addTyping() {
+    var div = document.createElement("div");
+    div.className = "cw-typing";
+    div.id = "cw-typing-now";
+    div.innerHTML = "<span></span><span></span><span></span>";
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function respond(text) {
+    var typing = addTyping();
+    var delay = 420 + Math.min(text.length * 6, 900);
+    setTimeout(function () {
+      typing.remove();
+      addMsg(text, "bot");
+    }, delay);
+  }
+
+  function findAnswer(raw) {
+    var text = raw.toLowerCase();
+    var best = null;
+    var bestScore = 0;
+    for (var i = 0; i < KB.length; i++) {
+      var item = KB[i];
+      var score = 0;
+      for (var j = 0; j < item.keywords.length; j++) {
+        if (text.indexOf(item.keywords[j]) !== -1) score++;
+      }
+      if (score > bestScore) { bestScore = score; best = item; }
+    }
+    return best ? best.a : FALLBACK;
+  }
+
+  function renderChips() {
+    chipsEl.innerHTML = "";
+    CHIP_ORDER.forEach(function (id) {
+      var item = KB.filter(function (k) { return k.id === id; })[0];
+      if (!item) return;
+      var chip = document.createElement("button");
+      chip.className = "cw-chip";
+      chip.type = "button";
+      chip.textContent = item.q;
+      chip.addEventListener("click", function () {
+        addMsg(item.q, "user");
+        respond(item.a);
+      });
+      chipsEl.appendChild(chip);
+    });
+  }
+
+  function openPanel() {
+    panel.classList.add("cw-open");
+    teaser.style.display = "none";
+    if (!opened) {
+      opened = true;
+      respond(GREETING);
+      renderChips();
+    }
+    input.focus();
+  }
+
+  function closePanel() {
+    panel.classList.remove("cw-open");
+  }
+
+  launcher.addEventListener("click", function () {
+    if (panel.classList.contains("cw-open")) { closePanel(); } else { openPanel(); }
+  });
+  closeBtn.addEventListener("click", closePanel);
+
+  teaserClose.addEventListener("click", function (e) {
+    e.stopPropagation();
+    teaser.style.display = "none";
+  });
+  teaser.addEventListener("click", openPanel);
+
+  function submitInput() {
+    var val = input.value.trim();
+    if (!val) return;
+    addMsg(val, "user");
+    input.value = "";
+    respond(findAnswer(val));
+  }
+
+  sendBtn.addEventListener("click", submitInput);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") submitInput();
+  });
+
+  // Show a teaser bubble a few seconds after load to invite interaction.
+  window.addEventListener("load", function () {
+    setTimeout(function () {
+      if (!opened) teaser.style.display = "block";
+    }, 3500);
+  });
+})();
+</script>
+
+</body>
+</html>
