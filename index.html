@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chinmay Parmar — AI &amp; Agent Systems Engineer</title>
-<meta name="description" content="Portfolio of Chinmay Parmar — tool-use orchestration, RAG systems, and honestly-validated AI infrastructure.">
+<title>Chinmay Parmar — AI for Fraud, Risk &amp; AML</title>
+<meta name="description" content="Portfolio of Chinmay Parmar — AI systems for fraud detection, risk, and AML, built by a FinTech-minded engineer with two years inside bank fraud investigations and controls audit.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chinmay Parmar — AI for Fraud, Risk &amp; AML">
+<meta property="og:description" content="Evidence-driven AI systems for fraud, risk &amp; AML — built by someone who spent two years investigating fraud and auditing controls inside a bank first.">
+<meta property="og:image" content="https://chinmayyhere-debug.github.io/og-image.png">
+<meta property="og:url" content="https://chinmayyhere-debug.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chinmay Parmar — AI for Fraud, Risk &amp; AML">
+<meta name="twitter:description" content="Evidence-driven AI systems for fraud, risk &amp; AML — fraud investigation and audit rigor applied to AI engineering, built for FinTech.">
+<meta name="twitter:image" content="https://chinmayyhere-debug.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:ital@1&display=swap" rel="stylesheet">
@@ -19,15 +28,34 @@
     --text: #f2f3f5;
     --text-dim: #a3a9b7;
     --text-faint: #6b7280;
-    --accent: #7dd3c0;
-    --accent-2: #e8b86d;
-    --accent-glow: rgba(125, 211, 192, 0.35);
-    --tier1: #7dd3c0;
-    --tier2: #e8b86d;
+    --accent: #34d399;
+    --accent-2: #fbbf24;
+    --accent-rgb: 52, 211, 153;
+    --accent-2-rgb: 251, 191, 36;
+    --accent-glow: rgba(52, 211, 153, 0.35);
+    --tier1: #34d399;
+    --tier2: #fbbf24;
     --radius: 16px;
     --radius-sm: 10px;
     --max-w: 1080px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ===== Ambient background (site-wide, fixed, behind everything) ===== */
+  .ambient-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: var(--bg); }
+  .ambient-blob { position: absolute; border-radius: 50%; filter: blur(120px); }
+  .ambient-blob.b1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.20), transparent 70%); top: -220px; left: -140px; animation: ambDrift1 28s ease-in-out infinite; }
+  .ambient-blob.b2 { width: 560px; height: 560px; background: radial-gradient(circle, rgba(var(--accent-2-rgb),0.14), transparent 70%); top: 30vh; right: -180px; animation: ambDrift2 34s ease-in-out infinite; }
+  .ambient-blob.b3 { width: 540px; height: 540px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.10), transparent 70%); top: 70vh; left: 20%; animation: ambDrift3 40s ease-in-out infinite; }
+  @keyframes ambDrift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,60px) scale(1.08); } }
+  @keyframes ambDrift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px,50px) scale(0.94); } }
+  @keyframes ambDrift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-50px) scale(1.1); } }
+  .ambient-spotlight { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(480px circle at var(--mx,50%) var(--my,20%), rgba(var(--accent-rgb),0.05), transparent 60%); }
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-blob { animation: none !important; }
+  }
+  @media (max-width: 720px) {
+    .ambient-blob { filter: blur(90px); opacity: 0.7; }
   }
 
   * { box-sizing: border-box; min-width: 0; }
@@ -49,10 +77,10 @@
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--accent); color: #05201a; }
+  ::selection { background: var(--accent); color: #052e16; }
 
   a { color: var(--accent); text-decoration: none; }
-  a.inline-link { text-decoration: underline; text-decoration-color: rgba(125,211,192,0.35); text-underline-offset: 3px; }
+  a.inline-link { text-decoration: underline; text-decoration-color: rgba(52,211,153,0.35); text-underline-offset: 3px; }
   a.inline-link:hover { text-decoration-color: var(--accent); }
 
   .wrap {
@@ -125,9 +153,9 @@
     inset: -20%;
     z-index: 0;
     background:
-      radial-gradient(600px circle at 18% 22%, rgba(125,211,192,0.16), transparent 60%),
-      radial-gradient(700px circle at 82% 68%, rgba(232,184,109,0.11), transparent 60%),
-      radial-gradient(500px circle at 55% 5%, rgba(125,211,192,0.08), transparent 60%);
+      radial-gradient(600px circle at 18% 22%, rgba(52,211,153,0.16), transparent 60%),
+      radial-gradient(700px circle at 82% 68%, rgba(251,191,36,0.11), transparent 60%),
+      radial-gradient(500px circle at 55% 5%, rgba(52,211,153,0.08), transparent 60%);
     animation: drift 22s ease-in-out infinite alternate;
     pointer-events: none;
   }
@@ -161,19 +189,38 @@
     font-weight: 700;
     margin-bottom: 22px;
     padding: 6px 14px 6px 10px;
-    border: 1px solid rgba(125,211,192,0.25);
+    border: 1px solid rgba(52,211,153,0.25);
     border-radius: 999px;
-    background: rgba(125,211,192,0.06);
+    background: rgba(52,211,153,0.06);
   }
+  .hero-suffix { color: var(--text-dim); font-weight: 500; }
+  .dual-badge-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 26px;
+  }
+  .dual-badge {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-dim);
+  }
+  .dual-badge-x { color: var(--accent-2); font-weight: 700; }
   .eyebrow .pulse-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 0 rgba(125,211,192,0.6);
+    box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
     animation: eyebrow-pulse 2.2s ease-in-out infinite;
   }
   @keyframes eyebrow-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(125,211,192,0.5); }
-    50% { box-shadow: 0 0 0 5px rgba(125,211,192,0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(52,211,153,0); }
   }
 
   h1 {
@@ -187,7 +234,7 @@
     word-break: break-word;
   }
   h1 .grad {
-    background: linear-gradient(100deg, var(--accent) 10%, #a8e8da 40%, var(--accent-2) 90%);
+    background: linear-gradient(100deg, var(--accent) 10%, #86efac 40%, var(--accent-2) 90%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -230,8 +277,8 @@
     transform: translateY(-2px);
   }
   .pill-link.primary {
-    background: linear-gradient(135deg, var(--accent), #4fb3a0);
-    color: #05201a;
+    background: linear-gradient(135deg, var(--accent), #10b981);
+    color: #052e16;
     font-weight: 700;
     border: none;
   }
@@ -268,9 +315,35 @@
     max-width: 720px;
   }
   .stat-tile {
-    background: var(--bg);
+    background: rgba(255,255,255,0.02);
     padding: 22px 20px;
+    transition: background 0.3s var(--ease);
   }
+  .stat-tile:hover { background: rgba(var(--accent-rgb), 0.07); }
+
+  @keyframes heroFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-anim { animation: heroFadeUp 0.8s var(--ease) both; }
+  @media (prefers-reduced-motion: reduce) { .hero-anim { animation: none; } }
+
+  .hero-bottom-grid { display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: stretch; margin-top: 56px; }
+  .hero-bottom-grid .stat-row { margin-top: 0; max-width: none; }
+  @media (max-width: 900px) { .hero-bottom-grid { grid-template-columns: 1fr; } }
+
+  .graph-panel {
+    border: 1px solid var(--border); border-radius: var(--radius); background: rgba(18,21,28,0.7);
+    backdrop-filter: blur(8px); overflow: hidden; display: flex; flex-direction: column;
+    transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .graph-panel:hover { border-color: rgba(var(--accent-rgb), 0.4); box-shadow: 0 10px 40px -14px rgba(var(--accent-rgb), 0.3); }
+  .graph-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.04em; color: var(--text-faint); font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; }
+  .graph-panel-head .live-tag { color: var(--accent); display: flex; align-items: center; gap: 6px; }
+  .graph-panel-body { padding: 10px 12px; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .graph-node-label { font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 9px; fill: var(--text-faint); }
+  .graph-flag-label { fill: var(--accent-2); font-weight: 700; }
+  .graph-flag-node { animation: graphFlagPulse 1.7s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes graphFlagPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .graph-panel-foot { padding: 10px 16px; border-top: 1px solid var(--border); font-size: 10.5px; color: var(--text-faint); display: flex; justify-content: space-between; font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; }
+  .graph-panel-foot b { color: var(--text); }
   .stat-num {
     font-size: clamp(22px, 3vw, 30px);
     font-weight: 800;
@@ -397,8 +470,8 @@
   }
   .project-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(125,211,192,0.35);
-    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(125,211,192,0.08);
+    border-color: rgba(52,211,153,0.35);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
   }
 
   .project-card:last-child { margin-bottom: 0; }
@@ -418,8 +491,8 @@
     justify-content: center;
     width: 34px; height: 34px;
     border-radius: 10px;
-    background: rgba(125,211,192,0.1);
-    border: 1px solid rgba(125,211,192,0.25);
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.25);
     color: var(--accent);
     font-weight: 800;
     font-size: 14px;
@@ -500,15 +573,15 @@
   }
 
   .badge-verified {
-    background: rgba(125, 211, 192, 0.1);
+    background: rgba(52, 211, 153, 0.1);
     color: var(--tier1);
-    border: 1px solid rgba(125, 211, 192, 0.3);
+    border: 1px solid rgba(52, 211, 153, 0.3);
   }
 
   .badge-reviewed {
-    background: rgba(232, 184, 109, 0.1);
+    background: rgba(251, 191, 36, 0.1);
     color: var(--tier2);
-    border: 1px solid rgba(232, 184, 109, 0.3);
+    border: 1px solid rgba(251, 191, 36, 0.3);
   }
 
   .card-links a {
@@ -524,7 +597,7 @@
   }
   .card-links a:hover {
     border-color: var(--accent);
-    background: rgba(125,211,192,0.06);
+    background: rgba(52,211,153,0.06);
     text-decoration: none;
     transform: translateX(2px);
   }
@@ -575,7 +648,7 @@
   .demo-scenario-btn:hover {
     border-color: var(--accent);
     color: var(--text);
-    background: rgba(125,211,192,0.08);
+    background: rgba(52,211,153,0.08);
     transform: translateY(-1px);
   }
   .demo-scenario-btn.is-danger:hover { border-color: #e0716b; }
@@ -707,6 +780,78 @@
     padding-top: 18px;
   }
 
+  /* ===== AI x Finance bridge ===== */
+  .bridge-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border-soft); border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
+  .bridge-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; background: var(--bg-panel); padding: 20px 22px; }
+  @media (max-width: 760px) { .bridge-row { grid-template-columns: 1fr; gap: 10px; } }
+  .bridge-side p { margin: 6px 0 0; font-size: 14.5px; color: var(--text-dim); line-height: 1.55; }
+  .bridge-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .bridge-finance .bridge-tag { color: var(--accent-2); }
+  .bridge-ai .bridge-tag { color: var(--accent); }
+  .bridge-arrow { font-size: 20px; color: var(--text-faint); }
+  @media (max-width: 760px) { .bridge-arrow { transform: rotate(90deg); } }
+
+  /* ===== Compliance search demo ===== */
+  .search-shell { display: flex; gap: 10px; margin-bottom: 6px; }
+  .search-input {
+    flex: 1;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent); }
+  .search-btn {
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #052e16;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 0 20px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .search-btn:hover { filter: brightness(1.08); }
+  .search-examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 24px; }
+  .search-example-btn {
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-panel-2);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .search-example-btn:hover { border-color: var(--accent); color: var(--text); }
+  .search-results { min-height: 40px; }
+  .search-result-card {
+    background: var(--bg-panel-2);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .search-result-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .search-result-title { font-weight: 700; font-size: 14px; }
+  .search-result-cat { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-2); font-weight: 700; }
+  .search-result-text { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; margin-bottom: 10px; }
+  .search-score-bar { height: 5px; border-radius: 3px; background: var(--border-soft); overflow: hidden; }
+  .search-score-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 3px; transition: width 0.5s var(--ease); }
+  .search-score-label { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+  .search-abstain {
+    background: var(--bg-panel-2);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+  }
+  .search-abstain strong { color: var(--text); }
+
   /* ===== Timeline (experience) ===== */
   .timeline { position: relative; padding-left: 28px; }
   .timeline::before {
@@ -787,7 +932,7 @@
 
   /* ===== Footer / CTA ===== */
   .cta-band {
-    background: linear-gradient(135deg, rgba(125,211,192,0.08), rgba(232,184,109,0.05));
+    background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(251,191,36,0.05));
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 64px 48px;
@@ -817,8 +962,8 @@
 
   /* ===== AI Chat Widget ===== */
   @keyframes cw-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(125, 211, 192, 0.45), 0 8px 24px rgba(0,0,0,0.4); }
-    50% { box-shadow: 0 0 0 10px rgba(125, 211, 192, 0), 0 8px 24px rgba(0,0,0,0.4); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45), 0 8px 24px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0), 0 8px 24px rgba(0,0,0,0.4); }
   }
   @keyframes cw-fade-in {
     from { opacity: 0; transform: translateY(14px) scale(0.97); }
@@ -855,7 +1000,7 @@
     border: none;
     cursor: pointer;
     z-index: 9999;
-    background: linear-gradient(135deg, var(--accent), #4fb3a0 60%, var(--accent-2));
+    background: linear-gradient(135deg, var(--accent), #10b981 60%, var(--accent-2));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -930,7 +1075,7 @@
 
   #cw-head {
     padding: 16px 18px;
-    background: linear-gradient(120deg, rgba(125,211,192,0.14), rgba(232,184,109,0.08));
+    background: linear-gradient(120deg, rgba(52,211,153,0.14), rgba(251,191,36,0.08));
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -1028,8 +1173,8 @@
   }
   .cw-msg-user {
     align-self: flex-end;
-    background: linear-gradient(135deg, var(--accent), #4fb3a0);
-    color: #05201a;
+    background: linear-gradient(135deg, var(--accent), #10b981);
+    color: #052e16;
     font-weight: 600;
     border-bottom-right-radius: 3px;
   }
@@ -1077,6 +1222,16 @@
     color: var(--accent);
     transform: translateY(-1px);
   }
+  .cw-chip-label {
+    width: 100%;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .cw-chip-reset { border-style: dashed; }
 
   #cw-inputrow {
     display: flex;
@@ -1100,8 +1255,8 @@
     height: 40px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, var(--accent), #4fb3a0);
-    color: #05201a;
+    background: linear-gradient(135deg, var(--accent), #10b981);
+    color: #052e16;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1125,12 +1280,16 @@
 </head>
 <body>
 
+<div class="ambient-bg"><div class="ambient-blob b1"></div><div class="ambient-blob b2"></div><div class="ambient-blob b3"></div></div>
+<div class="ambient-spotlight" id="ambientSpotlight"></div>
+
 <nav id="site-nav">
   <a class="nav-mark" href="#top"><span class="dot"></span>Chinmay Parmar</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#bridge">AI × FinTech</a></li>
     <li><a href="#projects">Work</a></li>
-    <li><a href="#demo">Live Demo</a></li>
+    <li><a href="#demo">Live Demos</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#credentials">Credentials</a></li>
@@ -1142,38 +1301,66 @@
   <div class="hero-glow"></div>
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
-    <div class="eyebrow reveal in-view"><span class="pulse-dot"></span>Toronto, ON — Open to AI/ML &amp; Data roles</div>
-    <h1 class="reveal in-view">Building <span class="grad">evidence&#8209;driven</span><br>AI systems.</h1>
-    <p class="tagline reveal in-view">
+    <div class="eyebrow reveal in-view hero-anim" style="animation-delay:.02s"><span class="pulse-dot"></span>Toronto, ON — Targeting AI, Fraud, Risk &amp; AML roles</div>
+    <h1 class="reveal in-view hero-anim" style="animation-delay:.1s">Building <span class="grad">evidence&#8209;driven</span><br>AI systems<span class="hero-suffix"> for fraud, risk &amp; AML.</span></h1>
+    <p class="tagline reveal in-view hero-anim" style="animation-delay:.18s">
       Computer Engineering graduate with a Graduate Certificate in AI &amp;
-      Data Science, moving from fraud investigation and IT audit in
-      regulated financial services into AI/ML engineering — bringing the
-      same rigor I used to trace fraud cases and audit findings back to
-      their root cause into building and validating AI systems.
+      Data Science, and two years inside a bank investigating fraud and
+      auditing controls. I build AI for FinTech — specifically fraud, risk,
+      and AML — not as a generalist who happens to know some finance, but as
+      someone who lived the case files first. Every system on this page is
+      built the way I was trained to build a fraud case: with cited evidence,
+      a labeled test set, and an honest account of what's actually been
+      verified.
     </p>
-    <div class="contact-row reveal in-view">
-      <a class="pill-link primary" href="#projects">View Projects ↓</a>
-      <a class="pill-link" href="mailto:chinmayy.parmar@gmail.com">✉ Email</a>
-      <a class="pill-link" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
-      <a class="pill-link" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
+    <div class="dual-badge-row reveal in-view hero-anim" style="animation-delay:.26s">
+      <span class="dual-badge">AI / ML Engineering</span>
+      <span class="dual-badge-x">×</span>
+      <span class="dual-badge">Fraud, Risk &amp; AML</span>
+    </div>
+    <div class="contact-row reveal in-view hero-anim" style="animation-delay:.34s">
+      <a class="pill-link magnetic" href="mailto:chinmayy.parmar@gmail.com">✉ Email</a>
+      <a class="pill-link magnetic" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
+      <a class="pill-link magnetic" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
     </div>
 
-    <div class="stat-row reveal in-view">
-      <div class="stat-tile">
-        <div class="stat-num">10,000+</div>
-        <div class="stat-label">Fraud cases investigated</div>
+    <div class="hero-bottom-grid reveal in-view hero-anim" style="animation-delay:.42s">
+      <div class="stat-row">
+        <div class="stat-tile">
+          <div class="stat-num">10,000+</div>
+          <div class="stat-label">Fraud cases investigated</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-num">5+ TB</div>
+          <div class="stat-label">Transactional data analyzed</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Shipped AI/agent projects</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-num">5</div>
+          <div class="stat-label">AI/Cloud certifications</div>
+        </div>
       </div>
-      <div class="stat-tile">
-        <div class="stat-num">5+ TB</div>
-        <div class="stat-label">Transactional data analyzed</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Shipped AI/agent projects</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-num">5</div>
-        <div class="stat-label">AI/Cloud certifications</div>
+      <div class="graph-panel">
+        <div class="graph-panel-head"><span>fraud_network.view</span><span class="live-tag"><span class="pulse-dot"></span>LIVE</span></div>
+        <div class="graph-panel-body">
+          <svg width="100%" height="150" viewBox="0 0 300 150">
+            <line x1="55" y1="35" x2="150" y2="70" stroke="var(--border)" stroke-width="1.3"/>
+            <line x1="150" y1="70" x2="245" y2="40" stroke="var(--border)" stroke-width="1.3"/>
+            <line x1="150" y1="70" x2="120" y2="125" stroke="var(--border)" stroke-width="1.3"/>
+            <line x1="120" y1="125" x2="230" y2="130" stroke="var(--accent-2)" stroke-width="1.6"/>
+            <line x1="150" y1="70" x2="245" y2="110" stroke="var(--border)" stroke-width="1.3"/>
+            <circle cx="55" cy="35" r="4.5" fill="var(--accent)"/><text x="63" y="38" class="graph-node-label">Acct_A</text>
+            <circle cx="150" cy="70" r="6" fill="var(--accent)"/><text x="159" y="73" class="graph-node-label">Tx_Hub</text>
+            <circle cx="245" cy="40" r="4" fill="var(--accent)"/><text x="253" y="43" class="graph-node-label">Acct_B</text>
+            <circle cx="120" cy="125" r="4" fill="var(--accent)"/><text x="60" y="140" class="graph-node-label">Acct_C</text>
+            <circle cx="230" cy="130" r="6" fill="var(--accent-2)" class="graph-flag-node"/><text x="200" y="146" class="graph-node-label graph-flag-label">⚠ FLAGGED</text>
+            <circle cx="245" cy="110" r="4" fill="var(--accent)"/><text x="253" y="113" class="graph-node-label">Acct_D</text>
+          </svg>
+        </div>
+        <div class="graph-panel-foot"><span>nodes: <b>6</b></span><span>flagged: <b style="color:var(--accent-2)">1</b></span><span>confidence: <b>92%</b></span></div>
       </div>
     </div>
   </div>
@@ -1209,10 +1396,70 @@
   </div>
 </section>
 
-<section id="principles" class="alt">
+<section id="bridge" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="idx">02</span>
+      <h2>Where AI Meets FinTech</h2>
+    </div>
+    <p class="section-sub reveal">
+      This isn't two unrelated halves of a resume. Almost everything I do on the AI
+      side is a direct translation of a skill I built on the fraud, risk, and AML
+      side — same instinct, different tool.
+    </p>
+    <div class="bridge-grid reveal-stagger reveal">
+      <div class="bridge-row">
+        <div class="bridge-side bridge-finance">
+          <span class="bridge-tag">Fraud</span>
+          <p>Investigated 10,000+ fraud cases by tracing suspicious patterns across 5+&nbsp;TB of transactional data.</p>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-side bridge-ai">
+          <span class="bridge-tag">AI / ML</span>
+          <p>Built a transparent, explainable <a class="inline-link" href="#demo">fraud-risk scoring engine</a> — same pattern-detection instinct, now a live, inspectable model.</p>
+        </div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-side bridge-finance">
+          <span class="bridge-tag">Risk / Audit</span>
+          <p>Audited technical controls (SOC&nbsp;1, SOC&nbsp;2, ISO&nbsp;3000), tracing every finding back to supporting evidence.</p>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-side bridge-ai">
+          <span class="bridge-tag">AI / ML</span>
+          <p>Ship every AI project with a labeled test suite and a validation report — the audit habit of "show the evidence," applied to model outputs.</p>
+        </div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-side bridge-finance">
+          <span class="bridge-tag">AML / Compliance</span>
+          <p>Reviewed dense regulatory and compliance documents (CDD, Transaction Monitoring, Sanctions Screening) daily.</p>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-side bridge-ai">
+          <span class="bridge-tag">AI / ML</span>
+          <p>Built a <a class="inline-link" href="#projects">retrieval-grounded Q&amp;A system</a> over that exact document domain — and a <a class="inline-link" href="#demo2">live search demo</a> of it below.</p>
+        </div>
+      </div>
+      <div class="bridge-row">
+        <div class="bridge-side bridge-finance">
+          <span class="bridge-tag">Risk</span>
+          <p>Translated ambiguous operational requirements into structured, defensible, policy-compliant decisions.</p>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-side bridge-ai">
+          <span class="bridge-tag">AI / ML</span>
+          <p>Design agent systems to abstain rather than guess when evidence is thin — a decision-under-uncertainty habit, not a coding trick.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="principles" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">03</span>
       <h2>How I Build</h2>
     </div>
     <p class="section-sub reveal">
@@ -1248,7 +1495,7 @@
 <section id="projects">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">03</span>
+      <span class="idx">04</span>
       <h2>Featured Projects</h2>
     </div>
 
@@ -1326,8 +1573,8 @@
 <section id="demo" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">04</span>
-      <h2>Try It Live</h2>
+      <span class="idx">05</span>
+      <h2>Try It Live — Fraud Risk</h2>
     </div>
 
     <div class="demo-shell reveal">
@@ -1396,7 +1643,7 @@
           <div class="demo-gauge-wrap">
             <svg viewBox="0 0 220 130" width="220" height="130">
               <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
-              <path id="demo-gauge-arc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#7dd3c0" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.5s var(--ease), stroke 0.4s var(--ease);"/>
+              <path id="demo-gauge-arc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#34d399" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.5s var(--ease), stroke 0.4s var(--ease);"/>
             </svg>
           </div>
           <div class="demo-score" id="demo-score">0</div>
@@ -1419,10 +1666,50 @@
   </div>
 </section>
 
+<section id="demo2">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">06</span>
+      <h2>Try It Live — Compliance Search</h2>
+    </div>
+
+    <div class="demo-shell reveal">
+      <p class="demo-note">
+        <strong>Compliance Document Search</strong> — a miniature, in-browser version of my
+        <a class="inline-link" href="#projects">Regulatory Document Q&amp;A project</a>. Type a
+        question about a compliance topic and it runs real TF-IDF term-weighting and cosine
+        similarity, client-side, against 8 short reference snippets — no backend, no LLM. Ask
+        something outside those 8 topics and watch it <strong>abstain</strong> instead of guessing.
+      </p>
+
+      <div class="search-shell">
+        <input class="search-input" id="search-input" type="text" placeholder="e.g. what counts as structuring?" autocomplete="off">
+        <button class="search-btn" id="search-btn">Search</button>
+      </div>
+      <div class="search-examples">
+        <button class="search-example-btn" data-q="what is beneficial ownership due diligence">Beneficial ownership</button>
+        <button class="search-example-btn" data-q="structuring cash deposits below threshold">Structuring pattern</button>
+        <button class="search-example-btn" data-q="sanctions screening false positive">Sanctions false positive</button>
+        <button class="search-example-btn" data-q="what's a good pizza topping">🎲 Off-topic (watch it abstain)</button>
+      </div>
+
+      <div class="search-results" id="search-results">
+        <div class="search-abstain"><strong>Try a query above.</strong> Or click one of the example chips — including the off-topic one, to see the abstain behavior in action.</div>
+      </div>
+
+      <div class="demo-disclaimer">
+        Same retrieval mechanics as the real project (TF-IDF + cosine similarity, abstain-when-uncertain),
+        scaled down to 8 illustrative snippets so it can run entirely in your browser. Not legal or
+        compliance advice — a demonstration of the retrieval approach, not real regulatory guidance.
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="experience" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">05</span>
+      <span class="idx">07</span>
       <h2>Experience</h2>
     </div>
 
@@ -1469,7 +1756,7 @@
 <section id="skills">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">06</span>
+      <span class="idx">08</span>
       <h2>Skills</h2>
     </div>
     <div class="skills-grid reveal-stagger reveal">
@@ -1517,7 +1804,7 @@
 <section id="credentials" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">07</span>
+      <span class="idx">09</span>
       <h2>Certifications &amp; Education</h2>
     </div>
     <div class="skills-grid reveal-stagger reveal">
@@ -1546,7 +1833,7 @@
   <div class="wrap">
     <div class="cta-band reveal">
       <h2>Let's talk.</h2>
-      <p>Open to AI/ML engineering, data science, and fraud/AML analytics roles in Toronto and remote across Canada.</p>
+      <p>Open to AI, Fraud, Risk &amp; AML roles in FinTech and financial services — Toronto and remote across Canada.</p>
       <div class="contact-row">
         <a class="pill-link primary" href="mailto:chinmayy.parmar@gmail.com">✉ chinmayy.parmar@gmail.com</a>
         <a class="pill-link" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
@@ -1575,10 +1862,10 @@
 
 <button id="cw-launcher" aria-label="Open chat assistant">
   <span class="cw-dot"></span>
-  <svg viewBox="0 0 24 24" fill="none" stroke="#05201a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#052e16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 2a1 1 0 0 1 1 1v1.06A8.004 8.004 0 0 1 20 12v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a8.004 8.004 0 0 1 7-7.94V3a1 1 0 0 1 1-1z"></path>
-    <circle cx="9" cy="12" r="1" fill="#05201a"></circle>
-    <circle cx="15" cy="12" r="1" fill="#05201a"></circle>
+    <circle cx="9" cy="12" r="1" fill="#052e16"></circle>
+    <circle cx="15" cy="12" r="1" fill="#052e16"></circle>
     <path d="M4 15v2a2 2 0 0 0 2 2h1l-1 3 4-3h6a2 2 0 0 0 2-2v-2"></path>
   </svg>
 </button>
@@ -1605,9 +1892,9 @@
   <div id="cw-inputrow">
     <input id="cw-input" type="text" placeholder="Type a question…" autocomplete="off" />
     <button id="cw-send" aria-label="Send">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#05201a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#052e16" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
         <line x1="22" y1="2" x2="11" y2="13"></line>
-        <polygon points="22 2 15 22 11 13 2 9 22 2" fill="#05201a"></polygon>
+        <polygon points="22 2 15 22 11 13 2 9 22 2" fill="#052e16"></polygon>
       </svg>
     </button>
   </div>
@@ -1643,6 +1930,30 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ---- Ambient cursor spotlight (subtle, desktop only) ----
+  var spotlight = document.getElementById('ambientSpotlight');
+  var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if (spotlight && !isCoarsePointer) {
+    window.addEventListener('mousemove', function (e) {
+      spotlight.style.setProperty('--mx', e.clientX + 'px');
+      spotlight.style.setProperty('--my', e.clientY + 'px');
+    }, { passive: true });
+  }
+
+  // ---- Magnetic hover on pill links (subtle pull toward cursor) ----
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!isCoarsePointer && !reduceMotion) {
+    document.querySelectorAll('.magnetic').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width / 2) * 0.22;
+        var y = (e.clientY - r.top - r.height / 2) * 0.3;
+        el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      });
+      el.addEventListener('mouseleave', function () { el.style.transform = 'translate(0,0)'; });
+    });
+  }
 })();
 </script>
 
@@ -1687,8 +1998,8 @@
   }
 
   function riskBand(score) {
-    if (score < 25) return { label: 'LOW RISK', color: '#7dd3c0' };
-    if (score < 50) return { label: 'MEDIUM RISK', color: '#e8b86d' };
+    if (score < 25) return { label: 'LOW RISK', color: '#34d399' };
+    if (score < 50) return { label: 'MEDIUM RISK', color: '#fbbf24' };
     if (score < 75) return { label: 'HIGH RISK', color: '#e29a52' };
     return { label: 'CRITICAL RISK', color: '#e0716b' };
   }
@@ -1793,74 +2104,213 @@
 (function () {
   "use strict";
 
+  // ---- Tiny in-browser TF-IDF + cosine-similarity search, over illustrative compliance snippets ----
+  var DOCS = [
+    { id: "cdd1", cat: "CDD", title: "Individual Customer Due Diligence", text: "For individual customers, CDD requires verifying legal name, date of birth, and residential address using a reliable independent source document, and screening the customer against sanctions and PEP lists prior to account activation." },
+    { id: "cdd2", cat: "CDD", title: "Beneficial Ownership Verification", text: "For entity customers, CDD requires identifying and verifying each beneficial owner holding twenty five percent or more equity or voting rights, and documenting the ownership structure in the customer file." },
+    { id: "cdd3", cat: "CDD", title: "Enhanced Due Diligence Triggers", text: "Enhanced due diligence is required when a customer is a politically exposed person, operates in a high risk jurisdiction, or has an unusually complex ownership structure with no clear business rationale." },
+    { id: "tm1", cat: "Transaction Monitoring", title: "Structuring Pattern", text: "Multiple cash deposits made just below the reporting threshold within a short time window, across one or more branches, is a recognized structuring pattern that requires escalation for review." },
+    { id: "tm2", cat: "Transaction Monitoring", title: "Rapid Movement Of Funds", text: "Funds received and moved out of an account within twenty four to forty eight hours, with no apparent business purpose, particularly to or from a jurisdiction with weak anti money laundering controls, should be flagged." },
+    { id: "tm3", cat: "Transaction Monitoring", title: "Alert Threshold Tuning", text: "Monitoring rule thresholds should be reviewed periodically against actual alert volume and disposition outcomes, to reduce false positives without weakening detection of genuinely suspicious activity." },
+    { id: "ss1", cat: "Sanctions Screening", title: "Name Matching", text: "Customer and counterparty names must be screened against applicable sanctions lists at onboarding and on an ongoing basis, using fuzzy name matching to account for transliteration and spelling variants." },
+    { id: "ss2", cat: "Sanctions Screening", title: "False Positive Disposition", text: "A sanctions screening match is not itself a violation. It must be reviewed against supporting identifiers such as date of birth, address, and ID number before being escalated or dispositioned as a false positive." }
+  ];
+
+  function tokenize(s) {
+    return (s.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (w) { return w.length > 2; });
+  }
+
+  var STOP = { "the": 1, "and": 1, "for": 1, "with": 1, "that": 1, "this": 1, "must": 1, "from": 1, "was": 1, "should": 1, "against": 1, "within": 1 };
+
+  var docTokens = DOCS.map(function (d) { return tokenize(d.text).filter(function (w) { return !STOP[w]; }); });
+  var df = {};
+  docTokens.forEach(function (toks) {
+    var seen = {};
+    toks.forEach(function (t) { if (!seen[t]) { seen[t] = 1; df[t] = (df[t] || 0) + 1; } });
+  });
+  var N = DOCS.length;
+  function idf(term) { return Math.log((N + 1) / ((df[term] || 0) + 1)) + 1; }
+
+  function vectorize(tokens) {
+    var tf = {};
+    tokens.forEach(function (t) { tf[t] = (tf[t] || 0) + 1; });
+    var vec = {};
+    Object.keys(tf).forEach(function (t) { vec[t] = tf[t] * idf(t); });
+    return vec;
+  }
+
+  var docVecs = docTokens.map(vectorize);
+
+  function cosine(vecA, vecB) {
+    var dot = 0, magA = 0, magB = 0;
+    Object.keys(vecA).forEach(function (k) { magA += vecA[k] * vecA[k]; if (vecB[k]) dot += vecA[k] * vecB[k]; });
+    Object.keys(vecB).forEach(function (k) { magB += vecB[k] * vecB[k]; });
+    if (!magA || !magB) return 0;
+    return dot / (Math.sqrt(magA) * Math.sqrt(magB));
+  }
+
+  var ABSTAIN_THRESHOLD = 0.12;
+
+  function runSearch(query) {
+    var qTokens = tokenize(query).filter(function (w) { return !STOP[w]; });
+    var qVec = vectorize(qTokens);
+    var scored = DOCS.map(function (d, i) { return { doc: d, score: cosine(qVec, docVecs[i]) }; });
+    scored.sort(function (a, b) { return b.score - a.score; });
+    return scored;
+  }
+
+  function escapeHtml2(s) {
+    var d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function renderResults(query) {
+    var out = document.getElementById("search-results");
+    var scored = runSearch(query);
+    var top = scored[0];
+    if (!top || top.score < ABSTAIN_THRESHOLD) {
+      out.innerHTML = '<div class="search-abstain"><strong>No confident match — abstaining.</strong> ' +
+        'The best match scored below the confidence threshold, so rather than surface a low-relevance ' +
+        'snippet as if it were an answer, this shows nothing. Same principle as the real project: decline ' +
+        'over guess.</div>';
+      return;
+    }
+    var top2 = scored.slice(0, 2).filter(function (s) { return s.score >= ABSTAIN_THRESHOLD; });
+    out.innerHTML = top2.map(function (s) {
+      var pct = Math.min(100, Math.round(s.score * 100));
+      return '<div class="search-result-card">' +
+        '<div class="search-result-top"><span class="search-result-title">' + escapeHtml2(s.doc.title) + '</span>' +
+        '<span class="search-result-cat">' + escapeHtml2(s.doc.cat) + '</span></div>' +
+        '<div class="search-result-text">' + escapeHtml2(s.doc.text) + '</div>' +
+        '<div class="search-score-bar"><div class="search-score-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="search-score-label">Cosine similarity match: ' + pct + '%</div>' +
+        '</div>';
+    }).join("");
+  }
+
+  var searchInput = document.getElementById("search-input");
+  var searchBtn = document.getElementById("search-btn");
+  if (searchBtn) {
+    searchBtn.addEventListener("click", function () {
+      var v = searchInput.value.trim();
+      if (v) renderResults(v);
+    });
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        var v = searchInput.value.trim();
+        if (v) renderResults(v);
+      }
+    });
+    document.querySelectorAll(".search-example-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var q = btn.getAttribute("data-q");
+        searchInput.value = q;
+        renderResults(q);
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
   // ---- Knowledge base, drawn directly from this page's own content ----
   var KB = [
+    {
+      id: "bridge",
+      q: "Why does he combine AI and fraud/risk/AML?",
+      keywords: ["ai and finance", "finance and ai", "why finance", "career change", "career changer", "unique", "combination", "bridge", "both worlds", "fintech", "aml", "fraud", "risk"],
+      a: "It's not two separate resumes glued together — the fraud/risk/AML side is where the AI habits came from. Tracing 10,000+ fraud cases back to evidence became 'ship every model with a labeled test set.' Auditing SOC 1/SOC 2/ISO 3000 controls became 'validate, don't assume.' Reviewing compliance documents (CDD, Transaction Monitoring, Sanctions Screening) daily became a retrieval-grounded Q&A project over that exact document domain. He's targeting AI roles specifically in FinTech — fraud, risk, and AML. See the **Where AI Meets FinTech** section near the top of the page for the full side-by-side.",
+      related: ["projects", "demo2", "experience"]
+    },
     {
       id: "working-on",
       q: "What is Chinmay currently working on?",
       keywords: ["working on", "current project", "right now", "these days", "currently doing"],
-      a: "Right now he's actively building two AI/agent projects: a **MCP Logistics Tool Orchestrator** (multi-tool agent orchestration for shipment tracking, freight cost, DOT compliance, and damage logging — with both a rule-based router and an LLM tool-use routing mode using Claude's API) and a **Regulatory Document Q&A system** (retrieval-based Q&A over compliance documents, built as the foundation for a future embeddings + LLM-generation upgrade). Both ship with real test suites and validation reports. Check the Featured Projects section above, or the GitHub links, for details."
+      a: "Right now he's actively building two AI/agent projects: a **MCP Logistics Tool Orchestrator** (multi-tool agent orchestration for shipment tracking, freight cost, DOT compliance, and damage logging — with both a rule-based router and an LLM tool-use routing mode using Claude's API) and a **Regulatory Document Q&A system** (retrieval-based Q&A over compliance documents, built as the foundation for a future embeddings + LLM-generation upgrade). Both ship with real test suites and validation reports. Check the Featured Projects section above, or the GitHub links, for details.",
+      related: ["projects", "demo", "demo2"]
     },
     {
       id: "job",
       q: "Where does he currently work?",
       keywords: ["work now", "job now", "currently work", "current job", "current role", "employer"],
-      a: "He's currently an **Insolvency Officer at CIBC** in Toronto, ON (July 2025–Present), translating operational requirements into structured, documented decisions under regulatory and policy constraints, and working cross-functionally with Legal and Compliance. Before that he was a **Fraud Analyst (Dispute Analyst) at CIBC** (Oct 2024–Jun 2025), where he investigated 10,000+ fraud cases across 5+ TB of transactional data. He's actively looking to transition into an AI/ML engineering role — that's what this whole site and the projects on it are aimed at."
+      a: "He's currently an **Insolvency Officer at CIBC** in Toronto, ON (July 2025–Present), translating operational requirements into structured, documented decisions under regulatory and policy constraints, and working cross-functionally with Legal and Compliance. Before that he was a **Fraud Analyst (Dispute Analyst) at CIBC** (Oct 2024–Jun 2025), where he investigated 10,000+ fraud cases across 5+ TB of transactional data. He's actively looking to transition into an AI/ML engineering role — that's what this whole site and the projects on it are aimed at.",
+      related: ["experience", "bridge", "contact"]
     },
     {
       id: "education",
       q: "Where did he study?",
       keywords: ["study", "studied", "school", "college", "university", "degree", "education"],
-      a: "Two degrees: an **Ontario College Graduate Certificate in Artificial Intelligence & Data Science from Loyalist College**, Toronto (Jan 2023–Sept 2024), and a **Bachelor of Engineering in Computer Engineering from Gujarat Technological University**, Ahmedabad, India (Aug 2018–June 2022). On top of that he's picked up certifications from IBM, Oracle (x3), and Google Cloud Skills Boost — see the Certifications section below."
+      a: "Two degrees: an **Ontario College Graduate Certificate in Artificial Intelligence & Data Science from Loyalist College**, Toronto (Jan 2023–Sept 2024), and a **Bachelor of Engineering in Computer Engineering from Gujarat Technological University**, Ahmedabad, India (Aug 2018–June 2022). On top of that he's picked up certifications from IBM, Oracle (x3), and Google Cloud Skills Boost — see the Certifications section below.",
+      related: ["certifications", "skills"]
     },
     {
       id: "projects",
       q: "What projects has he built?",
       keywords: ["projects", "built", "portfolio project", "github project"],
-      a: "Two shipped so far, both on GitHub: **MCP Logistics Tool Orchestrator** (agent tool-orchestration for logistics ops, Docker + Kubernetes deployment layer) and **Regulatory Document Q&A** (TF-IDF retrieval over compliance docs, 10/10 tests passing including negative controls). Both are honestly labeled — what's actually tested and verified vs. what's written-but-unverified is called out explicitly in each README. Scroll up to Featured Projects for the full writeups and GitHub links. There's also a **Try It Live** section right on this page — a Fraud Risk Analyzer you can play with directly, no GitHub click required."
+      a: "Two shipped so far, both on GitHub: **MCP Logistics Tool Orchestrator** (agent tool-orchestration for logistics ops, Docker + Kubernetes deployment layer) and **Regulatory Document Q&A** (TF-IDF retrieval over compliance docs, 10/10 tests passing including negative controls). Both are honestly labeled — what's actually tested and verified vs. what's written-but-unverified is called out explicitly in each README. Scroll up to Featured Projects for the full writeups and GitHub links. There are also **two live demos** right on this page you can play with directly, no GitHub click required.",
+      related: ["demo", "demo2", "skills"]
     },
     {
       id: "demo",
       q: "Is there anything interactive on this page?",
       keywords: ["demo", "interactive", "live demo", "try it", "play with", "fraud risk analyzer", "game"],
-      a: "Yes — scroll to **Try It Live**, right after Featured Projects. It's a Fraud Risk Analyzer built directly into this page: adjust a transaction's amount, location, device, velocity, time, and merchant category with sliders and toggles, and watch a transparent, explainable risk score update in real time — every point is broken down in a 'why this score' panel. It's a simplified, illustrative model (not connected to any real bank system), but the design principle is the same one behind the Regulatory Q&A project: show your work, don't just output a black-box number."
+      a: "Yes — two things, both built directly into this page. **Try It Live — Fraud Risk**: adjust a transaction's amount, location, device, velocity, time, and merchant category with sliders and toggles, and watch a transparent, explainable risk score update in real time, with every point broken down in a 'why this score' panel. **Try It Live — Compliance Search**: type a real question and watch client-side TF-IDF + cosine similarity retrieve (or honestly abstain from) an answer over 8 compliance snippets — a live, miniature version of the Regulatory Q&A project. Both are simplified and illustrative, not connected to any real system, but the design principle is the same one behind the real projects: show your work, don't just output a black-box number.",
+      related: ["demo2", "projects", "bridge"]
+    },
+    {
+      id: "demo2",
+      q: "How does the compliance search demo work?",
+      keywords: ["compliance search", "search demo", "tf-idf", "cosine similarity", "regulatory search", "abstain"],
+      a: "It's a real, tiny retrieval engine running entirely in your browser — no backend, no LLM call. It tokenizes your query, weights terms by TF-IDF against 8 illustrative compliance snippets, ranks them by cosine similarity, and only shows a result if the top match clears a confidence threshold. Ask something off-topic and it will tell you it doesn't have a confident match instead of forcing an answer — that abstain-over-guess behavior is deliberate, and it's the same principle behind the full Regulatory Document Q&A project on GitHub. Scroll down to **Try It Live — Compliance Search** to use it.",
+      related: ["demo", "projects", "bridge"]
     },
     {
       id: "skills",
       q: "What are his key skills?",
       keywords: ["skills", "tech stack", "technologies", "good at", "stack"],
-      a: "AI/LLM: Anthropic Claude tool-use, agent orchestration, MCP-style tool schema design, retrieval (TF-IDF/RAG concepts), model validation. Engineering: Python, SQL, data pipeline design, test-driven validation, REST/HTTP services. Infrastructure: Docker, docker-compose, Kubernetes, Git. And from his fraud/audit background: root-cause analysis, requirements translation, and regulatory/compliance context — which is genuinely why his projects ship with validation reports and cited evidence. Full breakdown in the Skills section above."
+      a: "AI/LLM: Anthropic Claude tool-use, agent orchestration, MCP-style tool schema design, retrieval (TF-IDF/RAG concepts), model validation. Engineering: Python, SQL, data pipeline design, test-driven validation, REST/HTTP services. Infrastructure: Docker, docker-compose, Kubernetes, Git. And from his fraud/audit background: root-cause analysis, requirements translation, and regulatory/compliance context — which is genuinely why his projects ship with validation reports and cited evidence. Full breakdown in the Skills section above.",
+      related: ["bridge", "certifications", "projects"]
     },
     {
       id: "experience",
       q: "What's his work experience?",
       keywords: ["experience", "resume", "background", "career history", "worked before"],
-      a: "Insolvency Officer at CIBC (Jul 2025–Present) → Fraud Analyst / Dispute Analyst at CIBC (Oct 2024–Jun 2025, 10,000+ cases investigated) → IT Audit Intern at SAV Associates (Feb–Sep 2024, SOC 1/SOC 2/ISO 3000 control reviews). It's a career-changer story: regulated financial services experience plus a formal AI & Data Science credential, not a fresh CS grad with no work history. See the Experience section above for full detail."
+      a: "Insolvency Officer at CIBC (Jul 2025–Present) → Fraud Analyst / Dispute Analyst at CIBC (Oct 2024–Jun 2025, 10,000+ cases investigated) → IT Audit Intern at SAV Associates (Feb–Sep 2024, SOC 1/SOC 2/ISO 3000 control reviews). It's a career-changer story: regulated financial services experience plus a formal AI & Data Science credential, not a fresh CS grad with no work history. See the Experience section above for full detail.",
+      related: ["bridge", "job", "education"]
     },
     {
       id: "certifications",
       q: "What certifications does he have?",
       keywords: ["certification", "certificate", "certified", "badge"],
-      a: "Five, all independently verifiable via the badge links in the Certifications section: Fundamentals of Building AI Agents (IBM), OCI 2025 Certified Generative AI Professional (Oracle), OCI 2025 Certified Data Science Professional (Oracle), Oracle Database@AWS Certified Architect Professional, and Google Cloud Skills Boost — Diamond League (28,733 pts)."
+      a: "Five, all independently verifiable via the badge links in the Certifications section: Fundamentals of Building AI Agents (IBM), OCI 2025 Certified Generative AI Professional (Oracle), OCI 2025 Certified Data Science Professional (Oracle), Oracle Database@AWS Certified Architect Professional, and Google Cloud Skills Boost — Diamond League (28,733 pts).",
+      related: ["education", "skills"]
     },
     {
       id: "contact",
       q: "How can I contact him?",
       keywords: ["contact", "email", "reach him", "hire him", "linkedin", "get in touch"],
-      a: "Easiest ways: email at chinmayy.parmar@gmail.com, or connect on LinkedIn (linkedin.com/in/chinmayyhere). His GitHub is github.com/chinmayyhere-debug if you want to look at the code behind these projects directly. All three links are in the header and footer of this page."
+      a: "Easiest ways: email at chinmayy.parmar@gmail.com, or connect on LinkedIn (linkedin.com/in/chinmayyhere). His GitHub is github.com/chinmayyhere-debug if you want to look at the code behind these projects directly. All three links are in the header and footer of this page.",
+      related: ["job", "location"]
     },
     {
       id: "location",
       q: "Where is he based?",
       keywords: ["located", "based", "location", "city", "toronto", "where is he"],
-      a: "Toronto, Ontario, Canada."
+      a: "Toronto, Ontario, Canada.",
+      related: ["contact", "job"]
     }
   ];
+  var KB_BY_ID = {};
+  KB.forEach(function (item) { KB_BY_ID[item.id] = item; });
 
   var GREETING = "Hi! I'm a small assistant built from the content on this page — not a live model, just a quick way to find things without scrolling. Ask me about Chinmay's projects, experience, education, or skills, or tap a question below.";
-  var FALLBACK = "I don't have a canned answer for that — I'm a lightweight, page-content-based assistant, not a full AI backend. Try one of the suggested questions, or reach out directly at chinmayy.parmar@gmail.com / LinkedIn for anything specific.";
+  var FALLBACK = "I don't have a canned answer for that — I'm a lightweight, page-content-based assistant, not a full AI backend. Try one of the suggested questions below, or reach out directly at chinmayy.parmar@gmail.com / LinkedIn for anything specific.";
 
-  var CHIP_ORDER = ["working-on", "job", "education", "projects", "skills", "contact"];
+  var CHIP_ORDER = ["bridge", "working-on", "job", "projects", "demo", "skills", "contact"];
 
   var panel = document.getElementById("cw-panel");
   var launcher = document.getElementById("cw-launcher");
@@ -1903,34 +2353,51 @@
     return div;
   }
 
-  function respond(text) {
+  function respond(text, relatedIds) {
     var typing = addTyping();
     var delay = 420 + Math.min(text.length * 6, 900);
     setTimeout(function () {
       typing.remove();
       addMsg(text, "bot");
+      if (relatedIds && relatedIds.length) {
+        renderChips(relatedIds, true);
+      } else {
+        renderChips(CHIP_ORDER, false);
+      }
     }, delay);
   }
 
   function findAnswer(raw) {
     var text = raw.toLowerCase();
+    var words = text.match(/[a-z0-9]+/g) || [];
     var best = null;
     var bestScore = 0;
     for (var i = 0; i < KB.length; i++) {
       var item = KB[i];
       var score = 0;
       for (var j = 0; j < item.keywords.length; j++) {
-        if (text.indexOf(item.keywords[j]) !== -1) score++;
+        if (text.indexOf(item.keywords[j]) !== -1) score += 2;
+      }
+      // Light fuzzy fallback: credit overlap with the item's own question text too.
+      var qWords = item.q.toLowerCase().match(/[a-z0-9]+/g) || [];
+      for (var k = 0; k < words.length; k++) {
+        if (words[k].length > 3 && qWords.indexOf(words[k]) !== -1) score += 1;
       }
       if (score > bestScore) { bestScore = score; best = item; }
     }
-    return best ? best.a : FALLBACK;
+    return best;
   }
 
-  function renderChips() {
+  function renderChips(ids, isFollowUp) {
     chipsEl.innerHTML = "";
-    CHIP_ORDER.forEach(function (id) {
-      var item = KB.filter(function (k) { return k.id === id; })[0];
+    if (isFollowUp) {
+      var label = document.createElement("div");
+      label.className = "cw-chip-label";
+      label.textContent = "Related:";
+      chipsEl.appendChild(label);
+    }
+    ids.forEach(function (id) {
+      var item = KB_BY_ID[id];
       if (!item) return;
       var chip = document.createElement("button");
       chip.className = "cw-chip";
@@ -1938,10 +2405,18 @@
       chip.textContent = item.q;
       chip.addEventListener("click", function () {
         addMsg(item.q, "user");
-        respond(item.a);
+        respond(item.a, item.related);
       });
       chipsEl.appendChild(chip);
     });
+    if (isFollowUp) {
+      var reset = document.createElement("button");
+      reset.className = "cw-chip cw-chip-reset";
+      reset.type = "button";
+      reset.textContent = "↺ More topics";
+      reset.addEventListener("click", function () { renderChips(CHIP_ORDER, false); });
+      chipsEl.appendChild(reset);
+    }
   }
 
   function openPanel() {
@@ -1950,7 +2425,6 @@
     if (!opened) {
       opened = true;
       respond(GREETING);
-      renderChips();
     }
     input.focus();
   }
@@ -1975,7 +2449,8 @@
     if (!val) return;
     addMsg(val, "user");
     input.value = "";
-    respond(findAnswer(val));
+    var match = findAnswer(val);
+    respond(match ? match.a : FALLBACK, match ? match.related : null);
   }
 
   sendBtn.addEventListener("click", submitInput);
