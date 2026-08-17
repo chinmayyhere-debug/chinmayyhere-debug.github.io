@@ -19,44 +19,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:ital@1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08090c;
-    --bg-alt: #0c0e13;
-    --bg-panel: #12151c;
-    --bg-panel-2: #171b24;
-    --border: #23262f;
-    --border-soft: #1a1d25;
-    --text: #f2f3f5;
-    --text-dim: #a3a9b7;
-    --text-faint: #6b7280;
-    --accent: #34d399;
-    --accent-2: #fbbf24;
-    --accent-rgb: 52, 211, 153;
-    --accent-2-rgb: 251, 191, 36;
-    --accent-glow: rgba(52, 211, 153, 0.35);
-    --tier1: #34d399;
-    --tier2: #fbbf24;
+    --bg: #fbfbfb;
+    --bg-alt: #f2f2f0;
+    --bg-panel: #ffffff;
+    --bg-panel-2: #eeeeee;
+    --border: #dcdcdc;
+    --border-soft: #e6e6e4;
+    --text: #0a0a0a;
+    --text-dim: #4a4a4a;
+    --text-faint: #8a8a8a;
+    --accent: #0a0a0a;
+    --accent-2: #5a5a5a;
+    --accent-rgb: 10, 10, 10;
+    --accent-2-rgb: 90, 90, 90;
+    --accent-glow: rgba(10, 10, 10, 0.10);
+    --tier1: #0a0a0a;
+    --tier2: #5a5a5a;
     --radius: 16px;
     --radius-sm: 10px;
     --max-w: 1080px;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.34));
+    --glass-border: rgba(255,255,255,0.85);
+    --glass-shadow: 0 8px 30px -12px rgba(10,10,10,0.14), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(10,10,10,0.05);
   }
 
-  /* ===== Ambient background (site-wide, fixed, behind everything) ===== */
-  .ambient-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: var(--bg); }
-  .ambient-blob { position: absolute; border-radius: 50%; filter: blur(120px); }
-  .ambient-blob.b1 { width: 620px; height: 620px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.20), transparent 70%); top: -220px; left: -140px; animation: ambDrift1 28s ease-in-out infinite; }
-  .ambient-blob.b2 { width: 560px; height: 560px; background: radial-gradient(circle, rgba(var(--accent-2-rgb),0.14), transparent 70%); top: 30vh; right: -180px; animation: ambDrift2 34s ease-in-out infinite; }
-  .ambient-blob.b3 { width: 540px; height: 540px; background: radial-gradient(circle, rgba(var(--accent-rgb),0.10), transparent 70%); top: 70vh; left: 20%; animation: ambDrift3 40s ease-in-out infinite; }
-  @keyframes ambDrift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,60px) scale(1.08); } }
-  @keyframes ambDrift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px,50px) scale(0.94); } }
-  @keyframes ambDrift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-50px) scale(1.1); } }
-  .ambient-spotlight { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(480px circle at var(--mx,50%) var(--my,20%), rgba(var(--accent-rgb),0.05), transparent 60%); }
-  @media (prefers-reduced-motion: reduce) {
-    .ambient-blob { animation: none !important; }
+  /* ===== Liquid glass utility ===== */
+  .glass {
+    position: relative;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow);
   }
-  @media (max-width: 720px) {
-    .ambient-blob { filter: blur(90px); opacity: 0.7; }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(120deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.35) 100%);
+    mix-blend-mode: overlay;
   }
+  .glass-wash {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) { }
 
   * { box-sizing: border-box; min-width: 0; }
   h1, h2, h3, p, span, a, li { overflow-wrap: break-word; word-break: break-word; }
@@ -77,10 +90,10 @@
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--accent); color: #052e16; }
+  ::selection { background: var(--accent); color: #ffffff; }
 
   a { color: var(--accent); text-decoration: none; }
-  a.inline-link { text-decoration: underline; text-decoration-color: rgba(52,211,153,0.35); text-underline-offset: 3px; }
+  a.inline-link { text-decoration: underline; text-decoration-color: rgba(10,10,10,0.35); text-underline-offset: 3px; }
   a.inline-link:hover { text-decoration-color: var(--accent); }
 
   .wrap {
@@ -98,20 +111,22 @@
     align-items: center;
     justify-content: space-between;
     padding: 18px 32px;
-    background: rgba(8, 9, 12, 0);
+    background: rgba(251, 251, 251, 0);
     border-bottom: 1px solid transparent;
     backdrop-filter: blur(0px);
     transition: background 0.35s var(--ease), border-color 0.35s var(--ease), backdrop-filter 0.35s var(--ease), padding 0.35s var(--ease);
   }
   #site-nav.scrolled {
-    background: rgba(8, 9, 12, 0.72);
-    border-bottom: 1px solid var(--border-soft);
-    backdrop-filter: blur(16px) saturate(140%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(255,255,255,0.5));
+    border-bottom: 1px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 8px 24px -14px rgba(10,10,10,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
     padding: 12px 32px;
   }
   .nav-mark {
     font-weight: 800;
-    font-size: 15px;
+    font-size: 18px;
     letter-spacing: -0.01em;
     color: var(--text);
     display: flex;
@@ -153,9 +168,9 @@
     inset: -20%;
     z-index: 0;
     background:
-      radial-gradient(600px circle at 18% 22%, rgba(52,211,153,0.16), transparent 60%),
-      radial-gradient(700px circle at 82% 68%, rgba(251,191,36,0.11), transparent 60%),
-      radial-gradient(500px circle at 55% 5%, rgba(52,211,153,0.08), transparent 60%);
+      radial-gradient(600px circle at 18% 22%, rgba(10,10,10,0.16), transparent 60%),
+      radial-gradient(700px circle at 82% 68%, rgba(90,90,90,0.11), transparent 60%),
+      radial-gradient(500px circle at 55% 5%, rgba(10,10,10,0.08), transparent 60%);
     animation: drift 22s ease-in-out infinite alternate;
     pointer-events: none;
   }
@@ -189,38 +204,30 @@
     font-weight: 700;
     margin-bottom: 22px;
     padding: 6px 14px 6px 10px;
-    border: 1px solid rgba(52,211,153,0.25);
     border-radius: 999px;
-    background: rgba(52,211,153,0.06);
+    position: relative;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 16px -8px rgba(10,10,10,0.12);
+  }
+  .eyebrow::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(120deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+    mix-blend-mode: overlay;
   }
   .hero-suffix { color: var(--text-dim); font-weight: 500; }
-  .dual-badge-row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 18px 0 26px;
-  }
-  .dual-badge {
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    padding: 7px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: var(--bg-panel);
-    color: var(--text-dim);
-  }
-  .dual-badge-x { color: var(--accent-2); font-weight: 700; }
   .eyebrow .pulse-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
+    box-shadow: 0 0 0 0 rgba(10,10,10,0.6);
     animation: eyebrow-pulse 2.2s ease-in-out infinite;
   }
   @keyframes eyebrow-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
-    50% { box-shadow: 0 0 0 5px rgba(52,211,153,0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(10,10,10,0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(10,10,10,0); }
   }
 
   h1 {
@@ -234,7 +241,7 @@
     word-break: break-word;
   }
   h1 .grad {
-    background: linear-gradient(100deg, var(--accent) 10%, #86efac 40%, var(--accent-2) 90%);
+    background: linear-gradient(100deg, #0a0a0a 0%, #3a3a3a 50%, #0a0a0a 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -262,14 +269,25 @@
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    border: 1px solid var(--border);
+    position: relative;
     border-radius: 999px;
     color: var(--text);
     font-size: 14px;
     font-weight: 500;
-    background: rgba(255,255,255,0.02);
-    transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 16px -10px rgba(10,10,10,0.14);
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
   }
+  .pill-link::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(120deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+    mix-blend-mode: overlay;
+  }
+  .pill-link.primary::before { display: none; }
   .pill-link:hover {
     border-color: var(--accent);
     background: var(--bg-panel);
@@ -277,8 +295,8 @@
     transform: translateY(-2px);
   }
   .pill-link.primary {
-    background: linear-gradient(135deg, var(--accent), #10b981);
-    color: #052e16;
+    background: linear-gradient(135deg, var(--accent), #2a2a2a);
+    color: #ffffff;
     font-weight: 700;
     border: none;
   }
@@ -306,44 +324,30 @@
   .stat-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1px;
-    background: var(--border-soft);
-    border: 1px solid var(--border-soft);
+    gap: 12px;
     border-radius: var(--radius);
-    overflow: hidden;
     margin-top: 56px;
     max-width: 720px;
   }
   .stat-tile {
-    background: rgba(255,255,255,0.02);
+    position: relative;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px -12px rgba(10,10,10,0.14);
     padding: 22px 20px;
-    transition: background 0.3s var(--ease);
+    transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
   }
-  .stat-tile:hover { background: rgba(var(--accent-rgb), 0.07); }
-
-  @keyframes heroFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-  .hero-anim { animation: heroFadeUp 0.8s var(--ease) both; }
-  @media (prefers-reduced-motion: reduce) { .hero-anim { animation: none; } }
-
-  .hero-bottom-grid { display: grid; grid-template-columns: 1fr 340px; gap: 18px; align-items: stretch; margin-top: 56px; }
-  .hero-bottom-grid .stat-row { margin-top: 0; max-width: none; }
-  @media (max-width: 900px) { .hero-bottom-grid { grid-template-columns: 1fr; } }
-
-  .graph-panel {
-    border: 1px solid var(--border); border-radius: var(--radius); background: rgba(18,21,28,0.7);
-    backdrop-filter: blur(8px); overflow: hidden; display: flex; flex-direction: column;
-    transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  .stat-tile::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(120deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.3) 100%);
+    mix-blend-mode: overlay;
   }
-  .graph-panel:hover { border-color: rgba(var(--accent-rgb), 0.4); box-shadow: 0 10px 40px -14px rgba(var(--accent-rgb), 0.3); }
-  .graph-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.04em; color: var(--text-faint); font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; }
-  .graph-panel-head .live-tag { color: var(--accent); display: flex; align-items: center; gap: 6px; }
-  .graph-panel-body { padding: 10px 12px; flex: 1; display: flex; align-items: center; justify-content: center; }
-  .graph-node-label { font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 9px; fill: var(--text-faint); }
-  .graph-flag-label { fill: var(--accent-2); font-weight: 700; }
-  .graph-flag-node { animation: graphFlagPulse 1.7s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
-  @keyframes graphFlagPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
-  .graph-panel-foot { padding: 10px 16px; border-top: 1px solid var(--border); font-size: 10.5px; color: var(--text-faint); display: flex; justify-content: space-between; font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; }
-  .graph-panel-foot b { color: var(--text); }
+  .stat-tile:hover { box-shadow: 0 10px 28px -12px rgba(10,10,10,0.22); transform: translateY(-2px); }
+
   .stat-num {
     font-size: clamp(22px, 3vw, 30px);
     font-weight: 800;
@@ -470,8 +474,8 @@
   }
   .project-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(52,211,153,0.35);
-    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(52,211,153,0.08);
+    border-color: rgba(10,10,10,0.35);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5), 0 0 0 1px rgba(10,10,10,0.08);
   }
 
   .project-card:last-child { margin-bottom: 0; }
@@ -491,8 +495,8 @@
     justify-content: center;
     width: 34px; height: 34px;
     border-radius: 10px;
-    background: rgba(52,211,153,0.1);
-    border: 1px solid rgba(52,211,153,0.25);
+    background: rgba(10,10,10,0.1);
+    border: 1px solid rgba(10,10,10,0.25);
     color: var(--accent);
     font-weight: 800;
     font-size: 14px;
@@ -573,15 +577,15 @@
   }
 
   .badge-verified {
-    background: rgba(52, 211, 153, 0.1);
+    background: rgba(10, 10, 10, 0.1);
     color: var(--tier1);
-    border: 1px solid rgba(52, 211, 153, 0.3);
+    border: 1px solid rgba(10, 10, 10, 0.3);
   }
 
   .badge-reviewed {
-    background: rgba(251, 191, 36, 0.1);
+    background: rgba(90, 90, 90, 0.1);
     color: var(--tier2);
-    border: 1px solid rgba(251, 191, 36, 0.3);
+    border: 1px solid rgba(90, 90, 90, 0.3);
   }
 
   .card-links a {
@@ -597,9 +601,48 @@
   }
   .card-links a:hover {
     border-color: var(--accent);
-    background: rgba(52,211,153,0.06);
+    background: rgba(10,10,10,0.06);
     text-decoration: none;
     transform: translateX(2px);
+  }
+
+  /* ===== Live Demos: tab hub ===== */
+  .demo-intro {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: -28px 0 28px;
+  }
+  .demo-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .demo-tab {
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .demo-tab:hover { border-color: var(--accent); color: var(--text); transform: translateY(-1px); }
+  .demo-tab.is-active {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+    box-shadow: 0 6px 18px -10px rgba(10,10,10,0.35);
+  }
+  .demo-panel { display: none; }
+  .demo-panel.is-active { display: block; }
+  @media (max-width: 640px) {
+    .demo-tabs { gap: 8px; }
+    .demo-tab { padding: 10px 14px; font-size: 12.5px; flex: 1 1 calc(50% - 8px); text-align: center; }
   }
 
   /* ===== Live Demo: Fraud Risk Analyzer ===== */
@@ -648,7 +691,7 @@
   .demo-scenario-btn:hover {
     border-color: var(--accent);
     color: var(--text);
-    background: rgba(52,211,153,0.08);
+    background: rgba(10,10,10,0.08);
     transform: translateY(-1px);
   }
   .demo-scenario-btn.is-danger:hover { border-color: #e0716b; }
@@ -780,6 +823,95 @@
     padding-top: 18px;
   }
 
+  /* ===== Dashboard components (Insolvency + AML demos) ===== */
+  .dash-compare { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-bottom: 22px; }
+  .dash-compare-row { }
+  .dash-compare-row .demo-factor-row { font-size: 13px; }
+  .dash-compare-row .demo-factor-bar { height: 8px; background: rgba(0,0,0,0.06); }
+  .dash-compare-row .demo-factor-fill { background: var(--accent); }
+  .dash-compare-row.is-threshold .demo-factor-fill { background: var(--text-faint); }
+
+  .dash-stats { grid-template-columns: repeat(4, 1fr); max-width: none !important; margin-top: 0 !important; }
+  .dash-stats .stat-tile { padding: 18px 16px; }
+  .dash-stats .stat-num { font-size: 22px; }
+  @media (max-width: 700px) { .dash-stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .dash-chart-card {
+    position: relative;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px 22px 18px;
+    margin: 26px 0 20px;
+  }
+  .dash-chart-title { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 18px; }
+  .dash-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 160px;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 2px;
+  }
+  .dash-bar-col { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+  .dash-bar {
+    width: 100%;
+    max-width: 22px;
+    border-radius: 4px 4px 0 0;
+    background: var(--accent-2);
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.15s var(--ease), transform 0.15s var(--ease);
+  }
+  .dash-bar:hover { opacity: 0.75; transform: translateY(-1px); }
+  .dash-bar.is-flag-warn { background: #8a5a1e; }
+  .dash-bar.is-flag-critical { background: #e0716b; }
+  .dash-bar-flag-dot {
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px; border-radius: 50%; background: inherit;
+    box-shadow: 0 0 0 2px var(--bg-panel);
+  }
+  .dash-axis-labels { display: flex; gap: 4px; margin-top: 8px; }
+  .dash-axis-label { flex: 1 1 0; text-align: center; font-size: 9px; color: var(--text-faint); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .dash-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a0a0a;
+    color: #ffffff;
+    font-size: 11.5px;
+    line-height: 1.5;
+    padding: 8px 11px;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s var(--ease);
+    z-index: 5;
+    box-shadow: 0 8px 20px -6px rgba(10,10,10,0.4);
+  }
+  .dash-bar:hover .dash-tooltip { opacity: 1; }
+
+  .dash-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; }
+  .dash-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-dim); }
+  .dash-legend-swatch { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  .dash-table-wrap { overflow-x: auto; margin-top: 4px; }
+  .dash-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dash-table th {
+    text-align: left; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-faint); padding: 0 10px 10px; border-bottom: 1px solid var(--border);
+  }
+  .dash-table td { padding: 11px 10px; border-bottom: 1px solid var(--border-soft); color: var(--text-dim); vertical-align: top; }
+  .dash-table td.is-strong { color: var(--text); font-weight: 700; }
+  .dash-flag-pill {
+    display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: 0.03em;
+    padding: 3px 9px; border-radius: 999px; text-transform: uppercase;
+  }
+  .dash-empty-note { font-size: 13px; color: var(--text-faint); font-style: italic; padding: 10px 0; }
+
   /* ===== AI x Finance bridge ===== */
   .bridge-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border-soft); border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
   .bridge-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; background: var(--bg-panel); padding: 20px 22px; }
@@ -807,7 +939,7 @@
   .search-btn {
     border: 1px solid var(--accent);
     background: var(--accent);
-    color: #052e16;
+    color: #ffffff;
     font-weight: 700;
     font-size: 13.5px;
     padding: 0 20px;
@@ -932,7 +1064,7 @@
 
   /* ===== Footer / CTA ===== */
   .cta-band {
-    background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(251,191,36,0.05));
+    background: linear-gradient(135deg, rgba(10,10,10,0.08), rgba(90,90,90,0.05));
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 64px 48px;
@@ -962,8 +1094,8 @@
 
   /* ===== AI Chat Widget ===== */
   @keyframes cw-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45), 0 8px 24px rgba(0,0,0,0.4); }
-    50% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0), 0 8px 24px rgba(0,0,0,0.4); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(10, 10, 10, 0.45), 0 8px 24px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(10, 10, 10, 0), 0 8px 24px rgba(0,0,0,0.4); }
   }
   @keyframes cw-fade-in {
     from { opacity: 0; transform: translateY(14px) scale(0.97); }
@@ -1000,7 +1132,7 @@
     border: none;
     cursor: pointer;
     z-index: 9999;
-    background: linear-gradient(135deg, var(--accent), #10b981 60%, var(--accent-2));
+    background: linear-gradient(135deg, var(--accent), #2a2a2a 60%, var(--accent-2));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1061,10 +1193,12 @@
     max-width: calc(100vw - 32px);
     height: 520px;
     max-height: calc(100vh - 140px);
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    box-shadow: 0 20px 60px -10px rgba(10,10,10,0.28), inset 0 1px 0 rgba(255,255,255,0.9);
     z-index: 9999;
     display: none;
     flex-direction: column;
@@ -1075,7 +1209,7 @@
 
   #cw-head {
     padding: 16px 18px;
-    background: linear-gradient(120deg, rgba(52,211,153,0.14), rgba(251,191,36,0.08));
+    background: linear-gradient(120deg, rgba(10,10,10,0.14), rgba(90,90,90,0.08));
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -1173,8 +1307,8 @@
   }
   .cw-msg-user {
     align-self: flex-end;
-    background: linear-gradient(135deg, var(--accent), #10b981);
-    color: #052e16;
+    background: linear-gradient(135deg, var(--accent), #2a2a2a);
+    color: #ffffff;
     font-weight: 600;
     border-bottom-right-radius: 3px;
   }
@@ -1255,8 +1389,8 @@
     height: 40px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, var(--accent), #10b981);
-    color: #052e16;
+    background: linear-gradient(135deg, var(--accent), #2a2a2a);
+    color: #ffffff;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1280,8 +1414,8 @@
 </head>
 <body>
 
-<div class="ambient-bg"><div class="ambient-blob b1"></div><div class="ambient-blob b2"></div><div class="ambient-blob b3"></div></div>
-<div class="ambient-spotlight" id="ambientSpotlight"></div>
+<div class="glass-wash" style="width:560px; height:560px; background:radial-gradient(circle, rgba(10,10,10,0.05), transparent 70%); top:-180px; left:80px;"></div>
+<div class="glass-wash" style="width:480px; height:480px; background:radial-gradient(circle, rgba(10,10,10,0.04), transparent 70%); top:20vh; right:-100px;"></div>
 
 <nav id="site-nav">
   <a class="nav-mark" href="#top"><span class="dot"></span>Chinmay Parmar</a>
@@ -1289,7 +1423,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#bridge">AI × FinTech</a></li>
     <li><a href="#projects">Work</a></li>
-    <li><a href="#demo">Live Demos</a></li>
+    <li><a href="#demo-hub">Live Demos</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#credentials">Credentials</a></li>
@@ -1301,66 +1435,42 @@
   <div class="hero-glow"></div>
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
-    <div class="eyebrow reveal in-view hero-anim" style="animation-delay:.02s"><span class="pulse-dot"></span>Toronto, ON — Targeting AI, Fraud, Risk &amp; AML roles</div>
-    <h1 class="reveal in-view hero-anim" style="animation-delay:.1s">Building <span class="grad">evidence&#8209;driven</span><br>AI systems<span class="hero-suffix"> for fraud, risk &amp; AML.</span></h1>
-    <p class="tagline reveal in-view hero-anim" style="animation-delay:.18s">
+    <div class="eyebrow reveal in-view"><span class="pulse-dot"></span>Toronto, ON — Targeting AI, Fraud, Risk &amp; AML roles</div>
+    <h1 class="reveal in-view">Building <span class="grad">evidence&#8209;driven</span><br>AI systems<span class="hero-suffix"> for fraud, risk &amp; AML.</span></h1>
+    <p class="tagline reveal in-view">
       Computer Engineering graduate with a Graduate Certificate in AI &amp;
-      Data Science, and two years inside a bank investigating fraud and
-      auditing controls. I build AI for FinTech — specifically fraud, risk,
-      and AML — not as a generalist who happens to know some finance, but as
-      someone who lived the case files first. Every system on this page is
-      built the way I was trained to build a fraud case: with cited evidence,
-      a labeled test set, and an honest account of what's actually been
-      verified.
+      Data Science, plus two years inside a bank investigating fraud and
+      auditing controls. I build AI for fraud, risk, and AML in FinTech.
+      Every system on this page follows the same standard I used on fraud
+      cases: cited evidence, a labeled test set, and an honest note on
+      what's actually been verified.
     </p>
-    <div class="dual-badge-row reveal in-view hero-anim" style="animation-delay:.26s">
-      <span class="dual-badge">AI / ML Engineering</span>
-      <span class="dual-badge-x">×</span>
-      <span class="dual-badge">Fraud, Risk &amp; AML</span>
-    </div>
-    <div class="contact-row reveal in-view hero-anim" style="animation-delay:.34s">
-      <a class="pill-link magnetic" href="mailto:chinmayy.parmar@gmail.com">✉ Email</a>
-      <a class="pill-link magnetic" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
-      <a class="pill-link magnetic" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
+    <div class="contact-row reveal in-view">
+      <a class="pill-link" href="mailto:chinmayy.parmar@gmail.com">✉ Email</a>
+      <a class="pill-link" href="https://www.linkedin.com/in/chinmayyhere/" target="_blank" rel="noopener">in/ LinkedIn</a>
+      <a class="pill-link" href="https://github.com/chinmayyhere-debug" target="_blank" rel="noopener">⌥ GitHub</a>
     </div>
 
-    <div class="hero-bottom-grid reveal in-view hero-anim" style="animation-delay:.42s">
-      <div class="stat-row">
-        <div class="stat-tile">
-          <div class="stat-num">10,000+</div>
-          <div class="stat-label">Fraud cases investigated</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-num">5+ TB</div>
-          <div class="stat-label">Transactional data analyzed</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-num">2</div>
-          <div class="stat-label">Shipped AI/agent projects</div>
-        </div>
-        <div class="stat-tile">
-          <div class="stat-num">5</div>
-          <div class="stat-label">AI/Cloud certifications</div>
-        </div>
+    <div class="stat-row reveal in-view">
+      <div class="stat-tile">
+        <div class="stat-num">10,000+</div>
+        <div class="stat-label">Fraud cases investigated</div>
       </div>
-      <div class="graph-panel">
-        <div class="graph-panel-head"><span>fraud_network.view</span><span class="live-tag"><span class="pulse-dot"></span>LIVE</span></div>
-        <div class="graph-panel-body">
-          <svg width="100%" height="150" viewBox="0 0 300 150">
-            <line x1="55" y1="35" x2="150" y2="70" stroke="var(--border)" stroke-width="1.3"/>
-            <line x1="150" y1="70" x2="245" y2="40" stroke="var(--border)" stroke-width="1.3"/>
-            <line x1="150" y1="70" x2="120" y2="125" stroke="var(--border)" stroke-width="1.3"/>
-            <line x1="120" y1="125" x2="230" y2="130" stroke="var(--accent-2)" stroke-width="1.6"/>
-            <line x1="150" y1="70" x2="245" y2="110" stroke="var(--border)" stroke-width="1.3"/>
-            <circle cx="55" cy="35" r="4.5" fill="var(--accent)"/><text x="63" y="38" class="graph-node-label">Acct_A</text>
-            <circle cx="150" cy="70" r="6" fill="var(--accent)"/><text x="159" y="73" class="graph-node-label">Tx_Hub</text>
-            <circle cx="245" cy="40" r="4" fill="var(--accent)"/><text x="253" y="43" class="graph-node-label">Acct_B</text>
-            <circle cx="120" cy="125" r="4" fill="var(--accent)"/><text x="60" y="140" class="graph-node-label">Acct_C</text>
-            <circle cx="230" cy="130" r="6" fill="var(--accent-2)" class="graph-flag-node"/><text x="200" y="146" class="graph-node-label graph-flag-label">⚠ FLAGGED</text>
-            <circle cx="245" cy="110" r="4" fill="var(--accent)"/><text x="253" y="113" class="graph-node-label">Acct_D</text>
-          </svg>
-        </div>
-        <div class="graph-panel-foot"><span>nodes: <b>6</b></span><span>flagged: <b style="color:var(--accent-2)">1</b></span><span>confidence: <b>92%</b></span></div>
+      <div class="stat-tile">
+        <div class="stat-num">5+ TB</div>
+        <div class="stat-label">Transactional data analyzed</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Shipped AI/agent projects</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">5</div>
+        <div class="stat-label">AI/Cloud certifications</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Live, interactive demos</div>
       </div>
     </div>
   </div>
@@ -1403,9 +1513,8 @@
       <h2>Where AI Meets FinTech</h2>
     </div>
     <p class="section-sub reveal">
-      This isn't two unrelated halves of a resume. Almost everything I do on the AI
-      side is a direct translation of a skill I built on the fraud, risk, and AML
-      side — same instinct, different tool.
+      Most of what I do on the AI side traces back to something I learned on the
+      fraud, risk, and AML side first. A few examples:
     </p>
     <div class="bridge-grid reveal-stagger reveal">
       <div class="bridge-row">
@@ -1416,7 +1525,7 @@
         <div class="bridge-arrow">→</div>
         <div class="bridge-side bridge-ai">
           <span class="bridge-tag">AI / ML</span>
-          <p>Built a transparent, explainable <a class="inline-link" href="#demo">fraud-risk scoring engine</a> — same pattern-detection instinct, now a live, inspectable model.</p>
+          <p>Built a transparent, explainable <a class="inline-link" href="#demo">fraud-risk scoring engine</a>. Same pattern-detection work, now as a live, inspectable model.</p>
         </div>
       </div>
       <div class="bridge-row">
@@ -1427,7 +1536,7 @@
         <div class="bridge-arrow">→</div>
         <div class="bridge-side bridge-ai">
           <span class="bridge-tag">AI / ML</span>
-          <p>Ship every AI project with a labeled test suite and a validation report — the audit habit of "show the evidence," applied to model outputs.</p>
+          <p>Every AI project ships with a labeled test suite and a validation report. Same "show the evidence" habit from audit work, applied to model outputs.</p>
         </div>
       </div>
       <div class="bridge-row">
@@ -1438,7 +1547,7 @@
         <div class="bridge-arrow">→</div>
         <div class="bridge-side bridge-ai">
           <span class="bridge-tag">AI / ML</span>
-          <p>Built a <a class="inline-link" href="#projects">retrieval-grounded Q&amp;A system</a> over that exact document domain — and a <a class="inline-link" href="#demo2">live search demo</a> of it below.</p>
+          <p>Built a <a class="inline-link" href="#projects">retrieval-grounded Q&amp;A system</a> over that exact document domain, plus the <a class="inline-link" href="#demo2">live search demo</a> below.</p>
         </div>
       </div>
       <div class="bridge-row">
@@ -1449,7 +1558,7 @@
         <div class="bridge-arrow">→</div>
         <div class="bridge-side bridge-ai">
           <span class="bridge-tag">AI / ML</span>
-          <p>Design agent systems to abstain rather than guess when evidence is thin — a decision-under-uncertainty habit, not a coding trick.</p>
+          <p>Design agent systems to abstain rather than guess when evidence is thin. Same judgment call, carried over from casework.</p>
         </div>
       </div>
     </div>
@@ -1463,9 +1572,8 @@
       <h2>How I Build</h2>
     </div>
     <p class="section-sub reveal">
-      These aren't abstract engineering values — they're habits carried
-      over directly from fraud investigation and audit work, where every
-      claim needs a trail back to evidence.
+      These are habits carried over directly from fraud investigation and
+      audit work, where every claim needs a trail back to evidence.
     </p>
     <div class="principles-grid reveal-stagger reveal">
       <div class="principle">
@@ -1570,146 +1678,290 @@
   </div>
 </section>
 
-<section id="demo" class="alt">
+<section id="demo-hub" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="idx">05</span>
-      <h2>Try It Live — Fraud Risk</h2>
+      <h2>Try It Live</h2>
     </div>
 
-    <div class="demo-shell reveal">
-      <p class="demo-note">
-        <strong>Fraud Risk Analyzer</strong> — a small, transparent scoring engine you can play with
-        right here. Adjust a transaction's attributes and watch the risk score update in real time,
-        with every point of the score explained — the same "show your work, don't guess" principle
-        behind my <a class="inline-link" href="#projects">Regulatory Q&amp;A project</a>, applied to the
-        kind of decisions I made daily as a Fraud/Dispute Analyst at CIBC.
-      </p>
+    <p class="demo-intro reveal">
+      Four small, working tools, not slideware. Pick one below; the other three are one click away.
+    </p>
 
-      <div class="demo-scenarios">
-        <button class="demo-scenario-btn" data-scenario="cardTesting">⚡ Card-testing pattern</button>
-        <button class="demo-scenario-btn" data-scenario="falsePositive">🙂 Legit, but flagged</button>
-        <button class="demo-scenario-btn" data-scenario="takeover">🕵️ Account-takeover pattern</button>
-        <button class="demo-scenario-btn is-danger" data-scenario="cryptoCashout">🔺 Crypto cash-out</button>
-        <button class="demo-scenario-btn" id="demo-randomize">🎲 Randomize</button>
-      </div>
+    <div class="demo-tabs reveal" role="tablist" aria-label="Live demos">
+      <button class="demo-tab" data-tab-target="demo" role="tab">Fraud Risk Scorer</button>
+      <button class="demo-tab" data-tab-target="demo2" role="tab">Compliance Search</button>
+      <button class="demo-tab" data-tab-target="demo3" role="tab">Insolvency Screener</button>
+      <button class="demo-tab" data-tab-target="demo4" role="tab">AML Monitoring</button>
+    </div>
 
-      <div class="demo-grid">
-        <div class="demo-controls">
-          <div class="demo-field">
-            <label>Transaction amount <span class="demo-val" id="val-amount">$150</span></label>
-            <input type="range" id="ctl-amount" min="10" max="5000" step="10" value="150">
-          </div>
-          <div class="demo-field">
-            <label>Location vs. home address</label>
-            <div class="demo-toggle-row" data-group="location">
-              <div class="demo-toggle is-active" data-value="0">Same city</div>
-              <div class="demo-toggle" data-value="8">Same country</div>
-              <div class="demo-toggle" data-value="25">Different country</div>
+    <div class="demo-panel" id="demo" data-panel>
+      <div class="demo-shell reveal">
+            <p class="demo-note">
+              <strong>Fraud Risk Analyzer</strong> — a small, transparent scoring engine you can play with
+              right here. Adjust a transaction's attributes and watch the risk score update in real time,
+              with every point of the score explained — the same "show your work, don't guess" principle
+              behind my <a class="inline-link" href="#projects">Regulatory Q&amp;A project</a>, applied to the
+              kind of decisions I made daily as a Fraud/Dispute Analyst at CIBC.
+            </p>
+
+            <div class="demo-scenarios">
+              <button class="demo-scenario-btn" data-scenario="cardTesting">⚡ Card-testing pattern</button>
+              <button class="demo-scenario-btn" data-scenario="falsePositive">🙂 Legit, but flagged</button>
+              <button class="demo-scenario-btn" data-scenario="takeover">🕵️ Account-takeover pattern</button>
+              <button class="demo-scenario-btn is-danger" data-scenario="cryptoCashout">🔺 Crypto cash-out</button>
+              <button class="demo-scenario-btn" id="demo-randomize">🎲 Randomize</button>
+            </div>
+
+            <div class="demo-grid">
+              <div class="demo-controls">
+                <div class="demo-field">
+                  <label>Transaction amount <span class="demo-val" id="val-amount">$150</span></label>
+                  <input type="range" id="ctl-amount" min="10" max="5000" step="10" value="150">
+                </div>
+                <div class="demo-field">
+                  <label>Location vs. home address</label>
+                  <div class="demo-toggle-row" data-group="location">
+                    <div class="demo-toggle is-active" data-value="0">Same city</div>
+                    <div class="demo-toggle" data-value="8">Same country</div>
+                    <div class="demo-toggle" data-value="25">Different country</div>
+                  </div>
+                </div>
+                <div class="demo-field">
+                  <label>Device</label>
+                  <div class="demo-toggle-row" data-group="device">
+                    <div class="demo-toggle is-active" data-value="0">Known device</div>
+                    <div class="demo-toggle" data-value="20">New / unrecognized</div>
+                  </div>
+                </div>
+                <div class="demo-field">
+                  <label>Velocity</label>
+                  <div class="demo-toggle-row" data-group="velocity">
+                    <div class="demo-toggle is-active" data-value="0">Normal (first today)</div>
+                    <div class="demo-toggle" data-value="25">High (5+ in last hour)</div>
+                  </div>
+                </div>
+                <div class="demo-field">
+                  <label>Time of transaction</label>
+                  <div class="demo-toggle-row" data-group="time">
+                    <div class="demo-toggle is-active" data-value="0">Business hours</div>
+                    <div class="demo-toggle" data-value="10">Late night (2–5am)</div>
+                  </div>
+                </div>
+                <div class="demo-field">
+                  <label>Merchant category</label>
+                  <div class="demo-toggle-row" data-group="merchant">
+                    <div class="demo-toggle is-active" data-value="0">Everyday retail</div>
+                    <div class="demo-toggle" data-value="8">Electronics</div>
+                    <div class="demo-toggle" data-value="20">Gift cards / crypto</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demo-result">
+                <div class="demo-gauge-wrap">
+                  <svg viewBox="0 0 220 130" width="220" height="130">
+                    <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+                    <path id="demo-gauge-arc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#0a0a0a" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.5s var(--ease), stroke 0.4s var(--ease);"/>
+                  </svg>
+                </div>
+                <div class="demo-score" id="demo-score">0</div>
+                <div class="demo-score-label" id="demo-score-label">LOW RISK</div>
+
+                <div class="demo-why">
+                  <div class="demo-why-title">Why this score</div>
+                  <div id="demo-why-list"></div>
+                </div>
+
+                <div class="demo-disclaimer">
+                  Illustrative model built for this portfolio — a simplified, transparent rule-weighted
+                  scorer, not connected to any bank system or real customer data. It mirrors the kind of
+                  factor-based reasoning used in real AML/fraud triage, scaled down to something you can
+                  interact with in a browser.
+                </div>
+              </div>
             </div>
           </div>
-          <div class="demo-field">
-            <label>Device</label>
-            <div class="demo-toggle-row" data-group="device">
-              <div class="demo-toggle is-active" data-value="0">Known device</div>
-              <div class="demo-toggle" data-value="20">New / unrecognized</div>
-            </div>
-          </div>
-          <div class="demo-field">
-            <label>Velocity</label>
-            <div class="demo-toggle-row" data-group="velocity">
-              <div class="demo-toggle is-active" data-value="0">Normal (first today)</div>
-              <div class="demo-toggle" data-value="25">High (5+ in last hour)</div>
-            </div>
-          </div>
-          <div class="demo-field">
-            <label>Time of transaction</label>
-            <div class="demo-toggle-row" data-group="time">
-              <div class="demo-toggle is-active" data-value="0">Business hours</div>
-              <div class="demo-toggle" data-value="10">Late night (2–5am)</div>
-            </div>
-          </div>
-          <div class="demo-field">
-            <label>Merchant category</label>
-            <div class="demo-toggle-row" data-group="merchant">
-              <div class="demo-toggle is-active" data-value="0">Everyday retail</div>
-              <div class="demo-toggle" data-value="8">Electronics</div>
-              <div class="demo-toggle" data-value="20">Gift cards / crypto</div>
-            </div>
-          </div>
-        </div>
+    </div>
 
-        <div class="demo-result">
-          <div class="demo-gauge-wrap">
-            <svg viewBox="0 0 220 130" width="220" height="130">
-              <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
-              <path id="demo-gauge-arc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#34d399" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.5s var(--ease), stroke 0.4s var(--ease);"/>
-            </svg>
-          </div>
-          <div class="demo-score" id="demo-score">0</div>
-          <div class="demo-score-label" id="demo-score-label">LOW RISK</div>
+    <div class="demo-panel" id="demo2" data-panel>
+      <div class="demo-shell reveal">
+            <p class="demo-note">
+              <strong>Compliance Document Search</strong> — a miniature, in-browser version of my
+              <a class="inline-link" href="#projects">Regulatory Document Q&amp;A project</a>. Type a
+              question about a compliance topic and it runs real TF-IDF term-weighting and cosine
+              similarity, client-side, against 8 short reference snippets — no backend, no LLM. Ask
+              something outside those 8 topics and watch it <strong>abstain</strong> instead of guessing.
+            </p>
 
-          <div class="demo-why">
-            <div class="demo-why-title">Why this score</div>
-            <div id="demo-why-list"></div>
-          </div>
+            <div class="search-shell">
+              <input class="search-input" id="search-input" type="text" placeholder="e.g. what counts as structuring?" autocomplete="off">
+              <button class="search-btn" id="search-btn">Search</button>
+            </div>
+            <div class="search-examples">
+              <button class="search-example-btn" data-q="what is beneficial ownership due diligence">Beneficial ownership</button>
+              <button class="search-example-btn" data-q="structuring cash deposits below threshold">Structuring pattern</button>
+              <button class="search-example-btn" data-q="sanctions screening false positive">Sanctions false positive</button>
+              <button class="search-example-btn" data-q="what's a good pizza topping">🎲 Off-topic (watch it abstain)</button>
+            </div>
 
-          <div class="demo-disclaimer">
-            Illustrative model built for this portfolio — a simplified, transparent rule-weighted
-            scorer, not connected to any bank system or real customer data. It mirrors the kind of
-            factor-based reasoning used in real AML/fraud triage, scaled down to something you can
-            interact with in a browser.
+            <div class="search-results" id="search-results">
+              <div class="search-abstain"><strong>Try a query above.</strong> Or click one of the example chips — including the off-topic one, to see the abstain behavior in action.</div>
+            </div>
+
+            <div class="demo-disclaimer">
+              Same retrieval mechanics as the real project (TF-IDF + cosine similarity, abstain-when-uncertain),
+              scaled down to 8 illustrative snippets so it can run entirely in your browser. Not legal or
+              compliance advice — a demonstration of the retrieval approach, not real regulatory guidance.
+            </div>
           </div>
-        </div>
-      </div>
+    </div>
+
+    <div class="demo-panel" id="demo3" data-panel>
+      <div class="demo-shell reveal">
+            <p class="demo-note">
+              <strong>Insolvency Case Screener</strong> — a simplified version of the triage logic behind
+              my current role as an Insolvency Officer. Enter a household's monthly income, expenses,
+              unsecured debt, and asset equity, and it walks through illustrative surplus-income logic to
+              suggest which path a Licensed Insolvency Trustee would likely explore first.
+            </p>
+
+            <div class="demo-scenarios">
+              <button class="demo-scenario-btn" data-scenario3="stable">🙂 Stable household</button>
+              <button class="demo-scenario-btn" data-scenario3="proposalRange">📋 Consumer Proposal range</button>
+              <button class="demo-scenario-btn" data-scenario3="divisionOne">📑 Division I Proposal range</button>
+              <button class="demo-scenario-btn is-danger" data-scenario3="bankruptcy">⚠️ Bankruptcy range</button>
+              <button class="demo-scenario-btn" id="demo3-randomize">🎲 Randomize</button>
+            </div>
+
+            <div class="demo-grid">
+              <div class="demo-controls">
+                <div class="demo-field">
+                  <label>Monthly household income <span class="demo-val" id="val3-income">$4,200</span></label>
+                  <input type="range" id="ctl3-income" min="1500" max="12000" step="100" value="4200">
+                </div>
+                <div class="demo-field">
+                  <label>Monthly essential expenses <span class="demo-val" id="val3-expenses">$3,100</span></label>
+                  <input type="range" id="ctl3-expenses" min="800" max="8000" step="100" value="3100">
+                </div>
+                <div class="demo-field">
+                  <label>Total unsecured debt <span class="demo-val" id="val3-debt">$28,000</span></label>
+                  <input type="range" id="ctl3-debt" min="0" max="300000" step="1000" value="28000">
+                </div>
+                <div class="demo-field">
+                  <label>Non-exempt asset equity <span class="demo-val" id="val3-assets">$2,000</span></label>
+                  <input type="range" id="ctl3-assets" min="0" max="80000" step="500" value="2000">
+                </div>
+                <div class="demo-field">
+                  <label>Household size</label>
+                  <div class="demo-toggle-row" data-group3="household">
+                    <div class="demo-toggle is-active" data-value3="1">1</div>
+                    <div class="demo-toggle" data-value3="2">2</div>
+                    <div class="demo-toggle" data-value3="3">3</div>
+                    <div class="demo-toggle" data-value3="4">4+</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demo-result">
+                <div class="demo-score-label" id="demo3-verdict" style="font-size:14px; margin-top:6px;">NOT INSOLVENT</div>
+
+                <div class="dash-compare">
+                  <div class="dash-compare-row">
+                    <div class="demo-factor-row"><span>Monthly income</span><span id="cmp3-income">$4,200</span></div>
+                    <div class="demo-factor-bar"><div class="demo-factor-fill" id="cmp3-income-fill" style="width:70%"></div></div>
+                  </div>
+                  <div class="dash-compare-row">
+                    <div class="demo-factor-row"><span>Monthly expenses</span><span id="cmp3-expenses">$3,100</span></div>
+                    <div class="demo-factor-bar"><div class="demo-factor-fill" id="cmp3-expenses-fill" style="width:52%"></div></div>
+                  </div>
+                  <div class="dash-compare-row is-threshold">
+                    <div class="demo-factor-row"><span>Illustrative surplus threshold</span><span id="cmp3-threshold">$2,200</span></div>
+                    <div class="demo-factor-bar"><div class="demo-factor-fill" id="cmp3-threshold-fill" style="width:37%"></div></div>
+                  </div>
+                </div>
+
+                <div class="demo-why">
+                  <div class="demo-why-title">Why this suggestion</div>
+                  <div id="demo3-why-list"></div>
+                </div>
+
+                <div class="demo-disclaimer">
+                  Illustrative decision model built for this portfolio — simplified surplus-income logic,
+                  not a substitute for a consultation with a Licensed Insolvency Trustee. The $250,000
+                  unsecured-debt line is commonly cited as the Consumer Proposal ceiling under Canada's
+                  Bankruptcy and Insolvency Act; every other threshold here is an approximation for
+                  demonstration purposes, not an official OSB standard.
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div class="demo-panel" id="demo4" data-panel>
+      <div class="demo-shell reveal">
+            <p class="demo-note">
+              <strong>AML Transaction Monitoring Dashboard</strong> — a synthetic account's transaction
+              history, scanned client-side against simple rule-based AML patterns (structuring, rapid fund
+              movement, high-risk jurisdictions). This is the kind of first-pass triage view I used daily
+              reviewing alerts as a Fraud/Dispute Analyst at CIBC, rebuilt here with fabricated data.
+            </p>
+
+            <div class="demo-scenarios">
+              <button class="demo-scenario-btn" data-scenario4="clean">✅ Clean account</button>
+              <button class="demo-scenario-btn" data-scenario4="structuring">🧩 Structuring pattern</button>
+              <button class="demo-scenario-btn" data-scenario4="layering">🔀 Rapid layering</button>
+              <button class="demo-scenario-btn is-danger" data-scenario4="jurisdiction">🌐 High-risk jurisdiction</button>
+              <button class="demo-scenario-btn" id="demo4-randomize">🎲 Randomize</button>
+            </div>
+
+            <div class="stat-row dash-stats" id="demo4-stats">
+              <div class="stat-tile"><div class="stat-num" id="stat4-scanned">14</div><div class="stat-label">Transactions scanned</div></div>
+              <div class="stat-tile"><div class="stat-num" id="stat4-alerts">0</div><div class="stat-label">Alerts triggered</div></div>
+              <div class="stat-tile"><div class="stat-num" id="stat4-severity">None</div><div class="stat-label">Highest severity</div></div>
+              <div class="stat-tile"><div class="stat-num" id="stat4-window">14d</div><div class="stat-label">Scan window</div></div>
+            </div>
+
+            <div class="dash-chart-card">
+              <div class="dash-chart-title">Transaction amounts over the scan window</div>
+              <div class="dash-chart-bars" id="demo4-chart"></div>
+              <div class="dash-axis-labels" id="demo4-axis"></div>
+              <div class="dash-legend">
+                <div class="dash-legend-item"><span class="dash-legend-swatch" style="background:var(--accent-2)"></span>Clean transaction</div>
+                <div class="dash-legend-item"><span class="dash-legend-swatch" style="background:#8a5a1e"></span>Flagged — review</div>
+                <div class="dash-legend-item"><span class="dash-legend-swatch" style="background:#e0716b"></span>Flagged — critical</div>
+              </div>
+            </div>
+
+            <div class="demo-why">
+              <div class="demo-why-title">Flagged transactions</div>
+              <div class="dash-table-wrap">
+                <table class="dash-table">
+                  <thead>
+                    <tr><th>Date</th><th>Amount</th><th>Pattern</th><th>Rule triggered</th></tr>
+                  </thead>
+                  <tbody id="demo4-table-body"></tbody>
+                </table>
+                <div class="dash-empty-note" id="demo4-empty" style="display:none;">No alerts triggered — every transaction in this window passed the rule set cleanly.</div>
+              </div>
+            </div>
+
+            <div class="demo-disclaimer">
+              100% synthetic, randomly generated transaction data — not connected to any bank system, and
+              no real account information of any kind. The detection rules (structuring, rapid layering,
+              high-risk jurisdiction flagging) mirror real AML triage concepts at a demonstration scale,
+              not a production monitoring system.
+            </div>
+          </div>
     </div>
   </div>
 </section>
 
-<section id="demo2">
+<section id="experience">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="idx">06</span>
-      <h2>Try It Live — Compliance Search</h2>
-    </div>
-
-    <div class="demo-shell reveal">
-      <p class="demo-note">
-        <strong>Compliance Document Search</strong> — a miniature, in-browser version of my
-        <a class="inline-link" href="#projects">Regulatory Document Q&amp;A project</a>. Type a
-        question about a compliance topic and it runs real TF-IDF term-weighting and cosine
-        similarity, client-side, against 8 short reference snippets — no backend, no LLM. Ask
-        something outside those 8 topics and watch it <strong>abstain</strong> instead of guessing.
-      </p>
-
-      <div class="search-shell">
-        <input class="search-input" id="search-input" type="text" placeholder="e.g. what counts as structuring?" autocomplete="off">
-        <button class="search-btn" id="search-btn">Search</button>
-      </div>
-      <div class="search-examples">
-        <button class="search-example-btn" data-q="what is beneficial ownership due diligence">Beneficial ownership</button>
-        <button class="search-example-btn" data-q="structuring cash deposits below threshold">Structuring pattern</button>
-        <button class="search-example-btn" data-q="sanctions screening false positive">Sanctions false positive</button>
-        <button class="search-example-btn" data-q="what's a good pizza topping">🎲 Off-topic (watch it abstain)</button>
-      </div>
-
-      <div class="search-results" id="search-results">
-        <div class="search-abstain"><strong>Try a query above.</strong> Or click one of the example chips — including the off-topic one, to see the abstain behavior in action.</div>
-      </div>
-
-      <div class="demo-disclaimer">
-        Same retrieval mechanics as the real project (TF-IDF + cosine similarity, abstain-when-uncertain),
-        scaled down to 8 illustrative snippets so it can run entirely in your browser. Not legal or
-        compliance advice — a demonstration of the retrieval approach, not real regulatory guidance.
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="experience" class="alt">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="idx">07</span>
       <h2>Experience</h2>
     </div>
 
@@ -1753,10 +2005,10 @@
   </div>
 </section>
 
-<section id="skills">
+<section id="skills" class="alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">08</span>
+      <span class="idx">07</span>
       <h2>Skills</h2>
     </div>
     <div class="skills-grid reveal-stagger reveal">
@@ -1801,10 +2053,10 @@
   </div>
 </section>
 
-<section id="credentials" class="alt">
+<section id="credentials">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="idx">09</span>
+      <span class="idx">08</span>
       <h2>Certifications &amp; Education</h2>
     </div>
     <div class="skills-grid reveal-stagger reveal">
@@ -1862,10 +2114,10 @@
 
 <button id="cw-launcher" aria-label="Open chat assistant">
   <span class="cw-dot"></span>
-  <svg viewBox="0 0 24 24" fill="none" stroke="#052e16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 2a1 1 0 0 1 1 1v1.06A8.004 8.004 0 0 1 20 12v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a8.004 8.004 0 0 1 7-7.94V3a1 1 0 0 1 1-1z"></path>
-    <circle cx="9" cy="12" r="1" fill="#052e16"></circle>
-    <circle cx="15" cy="12" r="1" fill="#052e16"></circle>
+    <circle cx="9" cy="12" r="1" fill="#ffffff"></circle>
+    <circle cx="15" cy="12" r="1" fill="#ffffff"></circle>
     <path d="M4 15v2a2 2 0 0 0 2 2h1l-1 3 4-3h6a2 2 0 0 0 2-2v-2"></path>
   </svg>
 </button>
@@ -1892,9 +2144,9 @@
   <div id="cw-inputrow">
     <input id="cw-input" type="text" placeholder="Type a question…" autocomplete="off" />
     <button id="cw-send" aria-label="Send">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#052e16" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
         <line x1="22" y1="2" x2="11" y2="13"></line>
-        <polygon points="22 2 15 22 11 13 2 9 22 2" fill="#052e16"></polygon>
+        <polygon points="22 2 15 22 11 13 2 9 22 2" fill="#ffffff"></polygon>
       </svg>
     </button>
   </div>
@@ -1930,30 +2182,6 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  // ---- Ambient cursor spotlight (subtle, desktop only) ----
-  var spotlight = document.getElementById('ambientSpotlight');
-  var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-  if (spotlight && !isCoarsePointer) {
-    window.addEventListener('mousemove', function (e) {
-      spotlight.style.setProperty('--mx', e.clientX + 'px');
-      spotlight.style.setProperty('--my', e.clientY + 'px');
-    }, { passive: true });
-  }
-
-  // ---- Magnetic hover on pill links (subtle pull toward cursor) ----
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!isCoarsePointer && !reduceMotion) {
-    document.querySelectorAll('.magnetic').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        var x = (e.clientX - r.left - r.width / 2) * 0.22;
-        var y = (e.clientY - r.top - r.height / 2) * 0.3;
-        el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-      });
-      el.addEventListener('mouseleave', function () { el.style.transform = 'translate(0,0)'; });
-    });
-  }
 })();
 </script>
 
@@ -1998,9 +2226,9 @@
   }
 
   function riskBand(score) {
-    if (score < 25) return { label: 'LOW RISK', color: '#34d399' };
-    if (score < 50) return { label: 'MEDIUM RISK', color: '#fbbf24' };
-    if (score < 75) return { label: 'HIGH RISK', color: '#e29a52' };
+    if (score < 25) return { label: 'LOW RISK', color: '#0a0a0a' };
+    if (score < 50) return { label: 'MEDIUM RISK', color: '#5a5a5a' };
+    if (score < 75) return { label: 'HIGH RISK', color: '#8a5a1e' };
     return { label: 'CRITICAL RISK', color: '#e0716b' };
   }
 
@@ -2217,13 +2445,307 @@
 (function () {
   "use strict";
 
+  // ---- Insolvency Case Screener: illustrative surplus-income triage logic ----
+  var d3Root = document.getElementById('demo3');
+  if (!d3Root) return;
+
+  var HOUSEHOLD_THRESHOLD = { 1: 2200, 2: 2740, 3: 3370, 4: 4090 };
+
+  var incomeEl = document.getElementById('ctl3-income');
+  var expensesEl = document.getElementById('ctl3-expenses');
+  var debtEl = document.getElementById('ctl3-debt');
+  var assetsEl = document.getElementById('ctl3-assets');
+  var verdictEl = document.getElementById('demo3-verdict');
+  var whyListEl3 = document.getElementById('demo3-why-list');
+
+  function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+  function getHousehold() {
+    var row = d3Root.querySelector('.demo-toggle-row[data-group3="household"]');
+    var active = row.querySelector('.demo-toggle.is-active');
+    return parseInt(active.getAttribute('data-value3'), 10);
+  }
+
+  function setHousehold(v) {
+    var row = d3Root.querySelector('.demo-toggle-row[data-group3="household"]');
+    row.querySelectorAll('.demo-toggle').forEach(function (t) {
+      t.classList.toggle('is-active', parseInt(t.getAttribute('data-value3'), 10) === v);
+    });
+  }
+
+  function recalc3() {
+    var income = parseInt(incomeEl.value, 10);
+    var expenses = parseInt(expensesEl.value, 10);
+    var debt = parseInt(debtEl.value, 10);
+    var assets = parseInt(assetsEl.value, 10);
+    var household = getHousehold();
+
+    document.getElementById('val3-income').textContent = fmt(income);
+    document.getElementById('val3-expenses').textContent = fmt(expenses);
+    document.getElementById('val3-debt').textContent = fmt(debt);
+    document.getElementById('val3-assets').textContent = fmt(assets);
+
+    var threshold = HOUSEHOLD_THRESHOLD[household];
+    var disposable = income - expenses;
+    var surplus = disposable - threshold;
+    var annualIncome = income * 12;
+    var debtToIncome = annualIncome > 0 ? debt / annualIncome : 0;
+    var assetCoverage = debt > 0 ? assets / debt : 1;
+
+    // comparison bars
+    var sharedMax = Math.max(income, expenses, threshold, 1);
+    document.getElementById('cmp3-income').textContent = fmt(income);
+    document.getElementById('cmp3-income-fill').style.width = Math.min(100, (income / sharedMax) * 100) + '%';
+    document.getElementById('cmp3-expenses').textContent = fmt(expenses);
+    document.getElementById('cmp3-expenses-fill').style.width = Math.min(100, (expenses / sharedMax) * 100) + '%';
+    document.getElementById('cmp3-threshold').textContent = fmt(threshold);
+    document.getElementById('cmp3-threshold-fill').style.width = Math.min(100, (threshold / sharedMax) * 100) + '%';
+
+    // verdict
+    var verdict;
+    if (debt <= 0 || (surplus >= 0 && debtToIncome <= 0.25)) {
+      verdict = { label: 'LIKELY NOT INSOLVENT', color: '#0a0a0a' };
+    } else if (assetCoverage < 0.08 && surplus < 0 && debtToIncome > 0.6) {
+      verdict = { label: 'BANKRUPTCY CANDIDATE', color: '#e0716b' };
+    } else if (debt > 250000) {
+      verdict = { label: 'DIVISION I PROPOSAL CANDIDATE', color: '#8a5a1e' };
+    } else {
+      verdict = { label: 'CONSUMER PROPOSAL CANDIDATE', color: '#5a5a5a' };
+    }
+    verdictEl.textContent = verdict.label;
+    verdictEl.style.color = verdict.color;
+    verdictEl.style.background = verdict.color + '1a';
+    verdictEl.style.border = '1px solid ' + verdict.color + '4d';
+
+    // reasoning factors
+    var factors = [];
+    factors.push({
+      label: 'Disposable income (' + fmt(disposable) + ') vs. illustrative threshold (' + fmt(threshold) + ')',
+      pct: Math.max(0, Math.min(100, 50 + (surplus / (threshold || 1)) * -50))
+    });
+    factors.push({
+      label: 'Unsecured debt vs. annual income: ' + Math.round(debtToIncome * 100) + '%',
+      pct: Math.max(0, Math.min(100, debtToIncome * 100))
+    });
+    factors.push({
+      label: 'Asset equity coverage of debt: ' + Math.round(Math.min(1, assetCoverage) * 100) + '%',
+      pct: Math.max(0, Math.min(100, (1 - Math.min(1, assetCoverage)) * 100))
+    });
+    whyListEl3.innerHTML = factors.map(function (f) {
+      return '<div class="demo-factor">' +
+        '<div class="demo-factor-row"><span>' + f.label + '</span></div>' +
+        '<div class="demo-factor-bar"><div class="demo-factor-fill" style="width:' + Math.round(f.pct) + '%"></div></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  d3Root.querySelectorAll('.demo-toggle-row[data-group3="household"] .demo-toggle').forEach(function (t) {
+    t.addEventListener('click', function () {
+      d3Root.querySelectorAll('.demo-toggle-row[data-group3="household"] .demo-toggle').forEach(function (x) { x.classList.remove('is-active'); });
+      t.classList.add('is-active');
+      recalc3();
+    });
+  });
+  [incomeEl, expensesEl, debtEl, assetsEl].forEach(function (el) { el.addEventListener('input', recalc3); });
+
+  var SCENARIOS3 = {
+    stable: { income: 7000, expenses: 3200, debt: 5000, assets: 10000, household: 1 },
+    proposalRange: { income: 4200, expenses: 3400, debt: 45000, assets: 6000, household: 2 },
+    divisionOne: { income: 5000, expenses: 3800, debt: 280000, assets: 25000, household: 3 },
+    bankruptcy: { income: 3500, expenses: 3300, debt: 60000, assets: 1000, household: 1 }
+  };
+  d3Root.querySelectorAll('[data-scenario3]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var s = SCENARIOS3[btn.getAttribute('data-scenario3')];
+      incomeEl.value = s.income; expensesEl.value = s.expenses; debtEl.value = s.debt; assetsEl.value = s.assets;
+      setHousehold(s.household);
+      recalc3();
+    });
+  });
+  document.getElementById('demo3-randomize').addEventListener('click', function () {
+    incomeEl.value = 2000 + Math.round(Math.random() * 9000 / 100) * 100;
+    expensesEl.value = 1200 + Math.round(Math.random() * 5500 / 100) * 100;
+    debtEl.value = Math.round(Math.random() * 300000 / 1000) * 1000;
+    assetsEl.value = Math.round(Math.random() * 60000 / 500) * 500;
+    setHousehold(1 + Math.floor(Math.random() * 4));
+    recalc3();
+  });
+
+  recalc3();
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- AML Transaction Monitoring Dashboard: synthetic data, client-side rule-based flagging ----
+  var d4Root = document.getElementById('demo4');
+  if (!d4Root) return;
+
+  var DAYS = ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13','D14'];
+
+  function tx(day, amount, flag) { return { day: day, amount: amount, flag: flag || null }; }
+
+  var GENERATORS4 = {
+    clean: function () {
+      var amounts = [120,340,75,610,220,95,480,150,720,60,310,410,180,530];
+      return amounts.map(function (a, i) { return tx(DAYS[i], a, null); });
+    },
+    structuring: function () {
+      var amounts = [150,280,90,340,9200,9450,9600,75,220,640,180,95,410,260];
+      var flagRule = { severity: 'critical', pattern: 'Structuring', rule: 'Deposit just under the $10,000 reporting threshold — part of a 3-deposit cluster within 72 hours.' };
+      return amounts.map(function (a, i) {
+        var flag = (i === 4 || i === 5 || i === 6) ? flagRule : null;
+        return tx(DAYS[i], a, flag);
+      });
+    },
+    layering: function () {
+      var amounts = [210,340,95,180,18000,17500,120,260,90,410,150,330,70,240];
+      return amounts.map(function (a, i) {
+        var flag = null;
+        if (i === 4) flag = { severity: 'critical', pattern: 'Rapid layering', rule: 'Large inbound transfer received with no prior account history of this size.' };
+        if (i === 5) flag = { severity: 'critical', pattern: 'Rapid layering', rule: 'Funds moved out within 48 hours of receipt, no apparent business purpose.' };
+        return tx(DAYS[i], a, flag);
+      });
+    },
+    jurisdiction: function () {
+      var amounts = [180,260,90,4200,340,120,410,95,220,3100,150,610,80,290];
+      var flagRule = { severity: 'warn', pattern: 'High-risk jurisdiction', rule: 'Counterparty located in a jurisdiction on the internal high-risk list — enhanced due diligence required.' };
+      return amounts.map(function (a, i) {
+        var flag = (i === 3 || i === 9) ? flagRule : null;
+        return tx(DAYS[i], a, flag);
+      });
+    }
+  };
+
+  var chartEl = document.getElementById('demo4-chart');
+  var axisEl = document.getElementById('demo4-axis');
+  var scannedEl = document.getElementById('stat4-scanned');
+  var alertsEl = document.getElementById('stat4-alerts');
+  var severityEl = document.getElementById('stat4-severity');
+  var tableBodyEl = document.getElementById('demo4-table-body');
+  var emptyEl = document.getElementById('demo4-empty');
+
+  function escapeHtml4(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderDemo4(txs) {
+    var maxAmount = Math.max.apply(null, txs.map(function (t) { return t.amount; }));
+    scannedEl.textContent = txs.length;
+    var flagged = txs.filter(function (t) { return t.flag; });
+    alertsEl.textContent = flagged.length;
+    var hasCritical = flagged.some(function (t) { return t.flag.severity === 'critical'; });
+    severityEl.textContent = flagged.length === 0 ? 'None' : (hasCritical ? 'Critical' : 'Review');
+
+    chartEl.innerHTML = txs.map(function (t) {
+      var pct = Math.max(6, Math.round((t.amount / maxAmount) * 100));
+      var cls = 'dash-bar';
+      if (t.flag) cls += t.flag.severity === 'critical' ? ' is-flag-critical' : ' is-flag-warn';
+      var tooltip = t.day + ' • $' + t.amount.toLocaleString() + (t.flag ? ' • ' + escapeHtml4(t.flag.pattern) : ' • no flags');
+      return '<div class="dash-bar-col"><div class="' + cls + '" style="height:' + pct + '%">' +
+        (t.flag ? '<span class="dash-bar-flag-dot"></span>' : '') +
+        '<span class="dash-tooltip">' + tooltip + '</span>' +
+        '</div></div>';
+    }).join('');
+
+    axisEl.innerHTML = txs.map(function (t) { return '<div class="dash-axis-label">' + t.day + '</div>'; }).join('');
+
+    if (flagged.length === 0) {
+      tableBodyEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+    } else {
+      emptyEl.style.display = 'none';
+      tableBodyEl.innerHTML = flagged.map(function (t) {
+        var pillColor = t.flag.severity === 'critical' ? '#e0716b' : '#8a5a1e';
+        var pillLabel = t.flag.severity === 'critical' ? 'Critical' : 'Review';
+        return '<tr>' +
+          '<td class="is-strong">' + t.day + '</td>' +
+          '<td class="is-strong">$' + t.amount.toLocaleString() + '</td>' +
+          '<td><span class="dash-flag-pill" style="color:' + pillColor + ';background:' + pillColor + '1a;border:1px solid ' + pillColor + '4d">' + pillLabel + ' — ' + escapeHtml4(t.flag.pattern) + '</span></td>' +
+          '<td>' + escapeHtml4(t.flag.rule) + '</td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  d4Root.querySelectorAll('[data-scenario4]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      renderDemo4(GENERATORS4[btn.getAttribute('data-scenario4')]());
+    });
+  });
+  document.getElementById('demo4-randomize').addEventListener('click', function () {
+    var keys = Object.keys(GENERATORS4);
+    var pick = keys[Math.floor(Math.random() * keys.length)];
+    renderDemo4(GENERATORS4[pick]());
+  });
+
+  renderDemo4(GENERATORS4.clean());
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.demo-tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.demo-panel'));
+  var ids = panels.map(function (p) { return p.id; });
+
+  function activate(id, scroll) {
+    if (ids.indexOf(id) === -1) return;
+    tabs.forEach(function (t) {
+      t.classList.toggle('is-active', t.getAttribute('data-tab-target') === id);
+    });
+    panels.forEach(function (p) {
+      p.classList.toggle('is-active', p.id === id);
+    });
+    if (scroll) {
+      var panelEl = document.getElementById(id);
+      if (panelEl) panelEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      activate(t.getAttribute('data-tab-target'), false);
+    });
+  });
+
+  // Contextual links elsewhere on the page (e.g. "the live search demo below")
+  // point at a specific demo's id — make sure clicking them opens that tab
+  // instead of landing on a hidden panel.
+  Array.prototype.slice.call(document.querySelectorAll('a[href="#demo"], a[href="#demo2"], a[href="#demo3"], a[href="#demo4"]')).forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href').slice(1);
+      if (ids.indexOf(id) === -1) return;
+      e.preventDefault();
+      activate(id, true);
+    });
+  });
+
+  var hash = window.location.hash.replace('#', '');
+  if (ids.indexOf(hash) !== -1) {
+    activate(hash, false);
+  } else {
+    activate(ids[Math.floor(Math.random() * ids.length)], false);
+  }
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+
   // ---- Knowledge base, drawn directly from this page's own content ----
   var KB = [
     {
       id: "bridge",
       q: "Why does he combine AI and fraud/risk/AML?",
       keywords: ["ai and finance", "finance and ai", "why finance", "career change", "career changer", "unique", "combination", "bridge", "both worlds", "fintech", "aml", "fraud", "risk"],
-      a: "It's not two separate resumes glued together — the fraud/risk/AML side is where the AI habits came from. Tracing 10,000+ fraud cases back to evidence became 'ship every model with a labeled test set.' Auditing SOC 1/SOC 2/ISO 3000 controls became 'validate, don't assume.' Reviewing compliance documents (CDD, Transaction Monitoring, Sanctions Screening) daily became a retrieval-grounded Q&A project over that exact document domain. He's targeting AI roles specifically in FinTech — fraud, risk, and AML. See the **Where AI Meets FinTech** section near the top of the page for the full side-by-side.",
+      a: "The fraud/risk/AML side is where the AI habits actually came from. Tracing 10,000+ fraud cases back to evidence became 'ship every model with a labeled test set.' Auditing SOC 1/SOC 2/ISO 3000 controls became 'validate, don't assume.' Reviewing compliance documents (CDD, Transaction Monitoring, Sanctions Screening) daily became a retrieval-grounded Q&A project over that exact document domain. He's targeting AI roles in FinTech: fraud, risk, and AML specifically. See the **Where AI Meets FinTech** section near the top of the page for the full mapping.",
       related: ["projects", "demo2", "experience"]
     },
     {
@@ -2307,8 +2829,8 @@
   var KB_BY_ID = {};
   KB.forEach(function (item) { KB_BY_ID[item.id] = item; });
 
-  var GREETING = "Hi! I'm a small assistant built from the content on this page — not a live model, just a quick way to find things without scrolling. Ask me about Chinmay's projects, experience, education, or skills, or tap a question below.";
-  var FALLBACK = "I don't have a canned answer for that — I'm a lightweight, page-content-based assistant, not a full AI backend. Try one of the suggested questions below, or reach out directly at chinmayy.parmar@gmail.com / LinkedIn for anything specific.";
+  var GREETING = "Hi! This is a small assistant built from the content on this page, so you can find things without scrolling. Ask about Chinmay's projects, experience, education, or skills, or tap a question below.";
+  var FALLBACK = "I don't have an answer for that one. It's a lightweight, page-content-based assistant, so try one of the suggested questions below, or reach out directly at chinmayy.parmar@gmail.com or on LinkedIn for anything specific.";
 
   var CHIP_ORDER = ["bridge", "working-on", "job", "projects", "demo", "skills", "contact"];
 
